@@ -1,4 +1,7 @@
 
+import 'package:doorsnap/Data/Service/service_locator.dart';
+import 'package:doorsnap/Presentation/home/screen/auth/SignUp_screens/email_phone_screen.dart';
+import 'package:doorsnap/Router/app_router.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -43,7 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    // Add your image here
+                    //  image will be added here
                     Container(
                       width: 110,
                       height: 110,
@@ -153,6 +156,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
+                                getIt<AppRouter>().push(const EmailPhoneScreen());
                                 // Navigate to Sign Up screen
                               },
                           ),
