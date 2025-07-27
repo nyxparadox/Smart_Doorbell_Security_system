@@ -1,3 +1,6 @@
+import 'package:doorsnap/Data/Service/service_locator.dart';
+import 'package:doorsnap/Presentation/home/screen/auth/SignUp_screens/otp_verification_screen.dart';
+import 'package:doorsnap/Router/app_router.dart';
 import 'package:flutter/material.dart';
 
 class EmailPhoneScreen extends StatefulWidget {
@@ -14,7 +17,7 @@ class _EmailPhoneScreenState extends State<EmailPhoneScreen> {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: const Text('SignUP ',style: TextStyle(color: Colors.white),),
-        backgroundColor: Colors.blue,
+        backgroundColor: const Color.fromARGB(255, 52, 105, 196),
         
     
       ),
@@ -34,7 +37,7 @@ class _EmailPhoneScreenState extends State<EmailPhoneScreen> {
               width: double.infinity,
               height: 800,
               decoration: BoxDecoration(
-                color: Colors.white38,
+                color: Colors.white54,
                 borderRadius: BorderRadius.circular(40),
                 boxShadow: [
                   BoxShadow(
@@ -92,7 +95,9 @@ class _EmailPhoneScreenState extends State<EmailPhoneScreen> {
                 
                     const SizedBox(height: 80),
                 
-                    ElevatedButton(onPressed: (){},
+                    ElevatedButton(onPressed: (){
+                      getIt<AppRouter>().push(const OtpVerificationScreen());
+                    },
                      child: Text("Next",
                       style: TextStyle(fontSize: 22,color: Colors.white)),
                       
