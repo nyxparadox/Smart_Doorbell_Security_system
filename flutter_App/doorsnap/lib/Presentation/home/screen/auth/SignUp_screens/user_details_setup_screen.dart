@@ -1,3 +1,6 @@
+import 'package:doorsnap/Data/Service/service_locator.dart';
+import 'package:doorsnap/Presentation/home/screen/auth/SignUp_screens/password_setup_screen.dart';
+import 'package:doorsnap/Router/app_router.dart';
 import 'package:flutter/material.dart';
 
 class UserDetailsSetupScreen extends StatefulWidget {
@@ -116,7 +119,9 @@ class _UserDetailsSetupScreenState extends State<UserDetailsSetupScreen> {
                     const SizedBox(height: 45),
 
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        getIt<AppRouter>().push(PasswordSetupScreen());
+                      },
                       child: Text(
                         "Done",
                         style: TextStyle(
