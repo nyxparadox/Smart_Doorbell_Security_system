@@ -1,3 +1,6 @@
+import 'package:doorsnap/Data/Service/service_locator.dart';
+import 'package:doorsnap/Presentation/home/screen/auth/SignUp_screens/user_details_setup_screen.dart';
+import 'package:doorsnap/Router/app_router.dart';
 import 'package:flutter/material.dart';
 
 class OtpVerificationScreen extends StatefulWidget {
@@ -23,7 +26,9 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
           decoration: BoxDecoration(
             color: Color.fromARGB(255, 192, 203, 209),
           ),
+
           padding: const EdgeInsets.only(left: 25, right: 25),
+          
           child: Center(
             child: Container(
               width: double.infinity,
@@ -40,7 +45,9 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                   )
                 ]
               ),
+
               padding: const EdgeInsets.only( bottom: 50, left: 25, right: 25),
+
               child: SingleChildScrollView(
                 child: Column(
                   children: [
@@ -66,14 +73,13 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                         Column(
                           children: [
                             Text("Verification Code", style: TextStyle(fontSize: 21),),
-
                           ],
                         ),
                       ],
                     ),
 
                     Text("we have sent you verification code on your email address and phone number.",
-                    style: TextStyle(color: Colors.grey),
+                    style: TextStyle(color: Colors.blueGrey, fontSize: 14),
                     ),
 
                     const SizedBox(height: 65,),
@@ -95,15 +101,16 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                       decoration: InputDecoration(
                         labelText: "phone otp",
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(18),
-                          
+                          borderRadius: BorderRadius.circular(18),  
                         )
                       ),
                     ),
 
                     const SizedBox(height: 40),
 
-                    ElevatedButton(onPressed: (){},
+                    ElevatedButton(onPressed: (){
+                      getIt<AppRouter>().push(const UserDetailsSetupScreen());
+                    },
                      child: Text("Verify",
                       style: TextStyle(
                         color: Colors.white, fontSize: 21,
@@ -114,15 +121,9 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color.fromARGB(255, 38, 79, 151),
                         minimumSize: Size(300, 60 )
-                        
-
-                      ),
-                      
-                    )
-
+                      ),  
+                    ),
                   ],
-
-                
                 ),
               ),
             ),

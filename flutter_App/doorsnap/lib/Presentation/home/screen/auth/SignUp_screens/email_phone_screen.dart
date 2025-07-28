@@ -37,7 +37,7 @@ class _EmailPhoneScreenState extends State<EmailPhoneScreen> {
               width: double.infinity,
               height: 800,
               decoration: BoxDecoration(
-                color: Colors.white54,
+                color: Colors.white60,
                 borderRadius: BorderRadius.circular(40),
                 boxShadow: [
                   BoxShadow(
@@ -54,17 +54,20 @@ class _EmailPhoneScreenState extends State<EmailPhoneScreen> {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text("Step 1.",
-                          style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.black),
-                        ),
-                      ],
-                    ),
                     
+                    Container(
+                      width: 300,
+                      height: 300,
+                      decoration: BoxDecoration(
+                        
+                      ),
+                      child: ClipOval(
+                        child: Image.asset("assets/images/3d_signUp.png",),
+                      ),
+                    ),
+
                     Text("Please enter your email and phone number to continue.",
-                      style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black54),
+                      style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.blueGrey),
                     ),
                 
                     const SizedBox(height: 40),
@@ -108,20 +111,7 @@ class _EmailPhoneScreenState extends State<EmailPhoneScreen> {
                       ),
                     ),
                 
-                    const SizedBox(height: 210,),
-                
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Icon(Icons.info_outline),
-                        Flexible(
-                          child: Text(
-                            "please gave your active email and phone number so our services can reach to you ",
-                            style: TextStyle(color: Colors.grey, fontSize: 14),                            
-                          ),
-                        ),
-                      ],
-                    )               
+                                  
                   ],
                 ),
               ),              
