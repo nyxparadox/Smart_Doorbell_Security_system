@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "874896243778",
+    "project_id": "doorsnap-aac45",
+    "storage_bucket": "doorsnap-aac45.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:874896243778:android:f10bd730034ea626ebc1db",
+        "android_client_info": {
+          "package_name": "com.example.doorsnap"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBspwnvIH5cQD7ErzSwCQYENRKnexYcIHM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

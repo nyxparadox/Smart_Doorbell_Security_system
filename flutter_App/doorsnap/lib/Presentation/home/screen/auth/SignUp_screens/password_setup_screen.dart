@@ -41,33 +41,38 @@ class _PasswordSetupScreenState extends State<PasswordSetupScreen> {
                     ),
                   ],
                 ),
-              
+
                 padding: const EdgeInsets.all(10),
-              
+
                 child: Column(
                   children: [
                     Container(
                       width: 300,
                       height: 300,
                       child: ClipOval(
-                        child: Image.asset("assets/images/password_protect.png"),
+                        child: Image.asset(
+                          "assets/images/password_protect.png",
+                        ),
                       ),
                     ),
-              
+
                     const SizedBox(height: 20),
-              
+
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
                           "Secure your account with strong password.",
-                          style: TextStyle(color: Colors.blueGrey, fontSize: 17),
+                          style: TextStyle(
+                            color: Colors.blueGrey,
+                            fontSize: 17,
+                          ),
                         ),
                       ],
                     ),
-              
+
                     const SizedBox(height: 40),
-              
+
                     TextField(
                       decoration: InputDecoration(
                         label: Text("password"),
@@ -77,9 +82,9 @@ class _PasswordSetupScreenState extends State<PasswordSetupScreen> {
                         ),
                       ),
                     ),
-              
+
                     const SizedBox(height: 20),
-              
+
                     TextField(
                       decoration: InputDecoration(
                         label: Text("confirm password"),
@@ -89,9 +94,9 @@ class _PasswordSetupScreenState extends State<PasswordSetupScreen> {
                         ),
                       ),
                     ),
-              
+
                     const SizedBox(height: 40),
-              
+
                     ElevatedButton(
                       onPressed: () {},
                       child: Text(
@@ -104,7 +109,7 @@ class _PasswordSetupScreenState extends State<PasswordSetupScreen> {
                       ),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color.fromARGB(255, 38, 79, 151),
-                        minimumSize: Size(300, 65)
+                        minimumSize: Size(300, 65),
                       ),
                     ),
                   ],
