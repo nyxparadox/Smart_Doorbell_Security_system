@@ -101,7 +101,7 @@ class _EmailPhoneScreenState extends State<EmailPhoneScreen> {
                     ElevatedButton(onPressed: (){
                       getIt<AppRouter>().push(const OtpVerificationScreen());
                     },
-                     child: Text("Next",
+                     child: Text("Send Otp",
                       style: TextStyle(fontSize: 22,color: Colors.white)),
                       
                      
