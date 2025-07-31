@@ -1,16 +1,127 @@
+
+
 import 'package:doorsnap/Data/Service/service_locator.dart';
+import 'package:doorsnap/Presentation/home/screen/auth/SignUp_screens/email_phone_screen.dart';
 import 'package:doorsnap/Presentation/home/screen/auth/SignUp_screens/user_details_setup_screen.dart';
 import 'package:doorsnap/Router/app_router.dart';
 import 'package:flutter/material.dart';
 
+
 class OtpVerificationScreen extends StatefulWidget {
-  const OtpVerificationScreen({super.key});
+  final String email;
+  final String phone;
+
+  const OtpVerificationScreen({
+    super.key,
+    required this.email,
+    required this.phone,
+  });
 
   @override
   State<OtpVerificationScreen> createState() => _OtpVerificationScreenState();
 }
 
 class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
+  final TextEditingController _emailOtpController = TextEditingController();
+  final TextEditingController _phoneOtpController = TextEditingController();
+  bool _isVerifying = false;
+
+  // Function to verify email OTP using SMTP
+  Future<bool> _verifyEmailOtp() async {
+    try {
+      String enteredOtp = _emailOtpController.text.trim();
+      bool isValid = SMTPEmailOTP.verifyEmailOTP(widget.email, enteredOtp);
+      
+      if (isValid) {
+        print("Email OTP verified successfully");
+        return true;
+      } else {
+        print("Email OTP verification failed");
+        // Debug: Print stored OTP (remove in production)
+        String? storedOtp = SMTPEmailOTP.getStoredOTP(widget.email);
+        print("Debug - Stored OTP: $storedOtp, Entered OTP: $enteredOtp");
+        return false;
+      }
+    } catch (e) {
+      print("Error verifying email OTP: $e");
+      return false;
+    }
+  }
+
+  // Function to verify phone OTP (placeholder)
+  Future<bool> _verifyPhoneOtp() async {
+    try {
+      // For now, we'll simulate verification
+      // we can implement actual phone OTP verification later
+      String enteredOtp = _phoneOtpController.text.trim();
+      
+      
+      if (enteredOtp.length == 6 && RegExp(r'^[0-9]+$').hasMatch(enteredOtp)) {
+        print("Phone OTP verified successfully (simulated)");
+        return true;
+      } else {
+        print("Phone OTP verification failed - invalid format");   // checking if it is 6 digits
+        return false;
+      }
+    } catch (e) {
+      print("Error verifying phone OTP: $e");
+      return false;
+    }
+  }
+
+  // Function to verify both OTPs
+  Future<void> _verifyOtp() async {
+    if (_emailOtpController.text.trim().isEmpty) {
+      _showSnackBar("Please enter email OTP", Colors.red);
+      return;
+    }
+    
+    if (_phoneOtpController.text.trim().isEmpty) {
+      _showSnackBar("Please enter phone OTP", Colors.red);
+      return;
+    }
+
+    setState(() {
+      _isVerifying = true;
+    });
+
+    try {
+      final emailVerified = await _verifyEmailOtp();
+      final phoneVerified = await _verifyPhoneOtp();
+
+      if (emailVerified && phoneVerified) {
+        _showSnackBar("Both OTPs verified successfully!", Colors.green);
+        await Future.delayed(Duration(milliseconds: 500));
+        getIt<AppRouter>().push(const UserDetailsSetupScreen());
+      } else if (emailVerified && !phoneVerified) {
+        _showSnackBar("Email OTP verified, but phone OTP is incorrect", Colors.orange);
+      } else if (!emailVerified && phoneVerified) {
+        _showSnackBar("Phone OTP verified, but email OTP is incorrect", Colors.orange);
+      } else {
+        _showSnackBar("Both OTPs are incorrect. Please try again.", Colors.red);
+      }
+    } catch (e) {
+      _showSnackBar("Verification failed. Please try again.", Colors.red);
+      print("Error in _verifyOtp: $e");
+    } finally {
+      setState(() {
+        _isVerifying = false;
+      });
+    }
+  }
+
+  // function for snackbars
+  void _showSnackBar(String message, Color color) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: color,
+        duration: Duration(seconds: 3),
+        behavior: SnackBarBehavior.floating,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,51 +189,112 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                       ],
                     ),
 
-                    Text("we have sent you verification code on your email address and phone number.",
-                    style: TextStyle(color: Colors.blueGrey, fontSize: 14),
+                    SizedBox(height: 10),
+
+                    // Showing email and phone information
+                    Text(
+                      "OTP sent to:",
+                      style: TextStyle(color: Colors.blueGrey, fontSize: 14, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      "Email: ${widget.email}",
+                      style: TextStyle(color: Colors.blueGrey, fontSize: 12),
+                    ),
+                    Text(
+                      "Phone: ${widget.phone}",
+                      style: TextStyle(color: Colors.blueGrey, fontSize: 12),
                     ),
 
-                    const SizedBox(height: 65,),
+                    const SizedBox(height: 50,),
 
                     TextField(
+                      controller: _emailOtpController,
                       keyboardType: TextInputType.number,
+                      maxLength: 6,
                       decoration: InputDecoration(
-                        labelText: "email otp",
+                        labelText: "Email OTP",
+                        hintText: "Enter 6-digit code",
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(18)
-                        )
+                        ),
+                        counterText: "",                         // to Hide character counter
                       ),
                     ),
 
                     const SizedBox(height: 30,),
 
                     TextField(
+                      controller: _phoneOtpController,
                       keyboardType: TextInputType.number,
+                      maxLength: 6,
                       decoration: InputDecoration(
-                        labelText: "phone otp",
+                        labelText: "Phone OTP",
+                        hintText: "Enter 6-digit code",
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(18),  
-                        )
+                        ),
+                        counterText: "",                      // Hide character counter
                       ),
                     ),
 
                     const SizedBox(height: 40),
 
-                    ElevatedButton(onPressed: (){
-                      getIt<AppRouter>().push(const UserDetailsSetupScreen());
-                    },
-                     child: Text("Verify",
-                      style: TextStyle(
-                        color: Colors.white, fontSize: 21,
-                         fontWeight: FontWeight.bold
-                        ),                    
-                      ),
+                    ElevatedButton(
+                      onPressed: _isVerifying ? null : _verifyOtp,
+                      child: _isVerifying 
+                        ? Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              SizedBox(
+                                width: 20,
+                                height: 20,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                                ),
+                              ),
+                              SizedBox(width: 10),
+                              Text("Verifying...",
+                                style: TextStyle(
+                                  color: Colors.white, fontSize: 21,
+                                  fontWeight: FontWeight.bold
+                                ),                    
+                              ),
+                            ],
+                          )
+                        : Text("Verify",
+                            style: TextStyle(
+                              color: Colors.white, fontSize: 21,
+                              fontWeight: FontWeight.bold
+                            ),                    
+                          ),
 
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color.fromARGB(255, 38, 79, 151),
-                        minimumSize: Size(300, 60 )
+                        backgroundColor: _isVerifying 
+                          ? Colors.grey 
+                          : const Color.fromARGB(255, 38, 79, 151),
+                        minimumSize: Size(300, 60)
                       ),  
                     ),
+
+                    SizedBox(height: 20),
+
+                    // Debug info (remove in production)
+                    if (widget.email.isNotEmpty)
+                      TextButton(
+                        onPressed: () {
+                          String? storedOtp = SMTPEmailOTP.getStoredOTP(widget.email);
+                          if (storedOtp != null) {
+                            _showSnackBar("Debug - Email OTP: $storedOtp", Colors.blue);
+                          } else {
+                            _showSnackBar("No OTP found for this email", Colors.orange);
+                          }
+                        },
+                        child: Text(
+                          "Debug: Show Email OTP",
+                          style: TextStyle(color: Colors.grey, fontSize: 12),
+                        ),
+                      ),
                   ],
                 ),
               ),
@@ -131,5 +303,12 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
         ),
       )
     );
+  }
+
+  @override
+  void dispose() {
+    _emailOtpController.dispose();
+    _phoneOtpController.dispose();
+    super.dispose();
   }
 }
