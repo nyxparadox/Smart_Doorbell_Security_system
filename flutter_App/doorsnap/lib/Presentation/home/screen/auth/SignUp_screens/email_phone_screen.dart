@@ -108,23 +108,14 @@ class _EmailPhoneScreenState extends State<EmailPhoneScreen> {
     }
   }
 
-  // Function to send phone OTP (placeholder - we can implement SMS service later)
-  Future<bool> _sendPhoneOtp() async {
-    try {
-      // For now, we'll simulate sending phone OTP
-      // You can implement actual SMS service here later
-      await Future.delayed(Duration(seconds: 1));
-      print("Phone OTP sent successfully to ${_phoneController.text}");
-      return true;
-    } catch (e) {
-      print("Error sending phone OTP: $e");
-      return false;
-    }
-  }
+  
+
 
   // Main function to send OTP
   Future<void> _sendOtp() async {
-    // Validate inputs first
+
+    
+    // Validate inputs 
     if (_emailController.text.trim().isEmpty) {
       _showSnackBar("Please enter your email address", Colors.red);
       return;
@@ -155,38 +146,28 @@ class _EmailPhoneScreenState extends State<EmailPhoneScreen> {
       print("Sending email OTP to: ${_emailController.text.trim()}");
       final emailResult = await _sendEmailOtp();
       
-      // Send phone OTP (placeholder)
-      final phoneResult = await _sendPhoneOtp();
+      
 
-      if (emailResult && phoneResult) {
-        _showSnackBar("OTP sent successfully to email and phone!", Colors.green);
+      if (emailResult ) {
+        _showSnackBar("OTP sent successfully to email!", Colors.green);
         
         // Small delay to show success message
         await Future.delayed(Duration(milliseconds: 800));
 
+        /*
         String phone = _phoneController.text.trim();
-        String formattedPhone = phone.startsWith("+91") ? phone : "+91$phone";
+        String formattedPhone = phone.startsWith("+91") ? phone : "+91$phone"; */    // this can also be removed beacause we didn't use this _formatedphone any where till now
 
         
         // Navigate to OTP verification screen
         getIt<AppRouter>().push(
           OtpVerificationScreen(
             email: _emailController.text.trim(),
-            phone: formattedPhone,
+            // phone: formattedPhone,        --- we will remove this
           )
         );
-      } else if (emailResult && !phoneResult) {
-        _showSnackBar("Email OTP sent, but phone OTP failed", Colors.orange);
-        // You can still navigate if email OTP is sent
-        await Future.delayed(Duration(milliseconds: 800));
-        getIt<AppRouter>().push(
-          OtpVerificationScreen(
-            email: _emailController.text.trim(),
-            phone: _phoneController.text.trim(),
-          )
-        );
-      } else if (!emailResult && phoneResult) {
-        _showSnackBar("Phone OTP sent, but email OTP failed", Colors.orange);
+      } else if (!emailResult) {
+        _showSnackBar("email OTP failed", Colors.orange);
       } else {
         _showSnackBar("Failed to send OTP. Please try again.", Colors.red);
       }
@@ -353,7 +334,7 @@ class _EmailPhoneScreenState extends State<EmailPhoneScreen> {
                             ],
                           )
                         : Text(
-                            "Send OTP",
+                            "Next",
                             style: TextStyle(fontSize: 22, color: Colors.white),
                           ),
 
@@ -377,5 +358,5 @@ class _EmailPhoneScreenState extends State<EmailPhoneScreen> {
 
 
 
-//==================================UPDATED CODE=======================================================
+
 
