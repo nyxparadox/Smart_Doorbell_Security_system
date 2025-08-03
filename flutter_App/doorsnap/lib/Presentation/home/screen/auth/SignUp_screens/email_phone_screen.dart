@@ -154,16 +154,16 @@ class _EmailPhoneScreenState extends State<EmailPhoneScreen> {
         // Small delay to show success message
         await Future.delayed(Duration(milliseconds: 800));
 
-        /*
+        
         String phone = _phoneController.text.trim();
-        String formattedPhone = phone.startsWith("+91") ? phone : "+91$phone"; */    // this can also be removed beacause we didn't use this _formatedphone any where till now
+        String formattedPhone = phone.startsWith("+91") ? phone : "+91$phone";    // this can also be removed beacause we didn't use this _formatedphone any where till now
 
         
         // Navigate to OTP verification screen
         getIt<AppRouter>().push(
           OtpVerificationScreen(
             email: _emailController.text.trim(),
-            // phone: formattedPhone,        --- we will remove this
+            phone: formattedPhone,       
           )
         );
       } else if (!emailResult) {
@@ -173,7 +173,7 @@ class _EmailPhoneScreenState extends State<EmailPhoneScreen> {
       }
     } catch (e) {
       _showSnackBar("An error occurred. Please try again.", Colors.red);
-      print("Error in _sendOtp: $e");
+      
     } finally {
       setState(() {
         _isLoading = false;

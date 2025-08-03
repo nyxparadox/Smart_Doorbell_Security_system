@@ -1,6 +1,7 @@
 
 
 import 'package:doorsnap/Data/Service/service_locator.dart';
+import 'package:doorsnap/Logics/cubit/auth_cubit.dart';
 import 'package:doorsnap/Presentation/home/screen/auth/SignUp_screens/email_phone_screen.dart';
 import 'package:doorsnap/Presentation/home/screen/auth/SignUp_screens/user_details_setup_screen.dart';
 import 'package:doorsnap/Router/app_router.dart';
@@ -9,11 +10,13 @@ import 'package:flutter/material.dart';
 
 class OtpVerificationScreen extends StatefulWidget {
   final String email;
+  final String  phone;
 
 
   const OtpVerificationScreen({
     super.key,
     required this.email,
+    required this.phone,
     
   });
 
@@ -51,14 +54,12 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
   }
 
 
-  // Function to verify both OTPs
+  // Function to verify email OTPs
   Future<void> _verifyOtp() async {
     if (_emailOtpController.text.trim().isEmpty) {
       _showSnackBar("Please enter email OTP", Colors.red);
       return;
     }
-    
-    
 
     setState(() {
       _isVerifying = true;
@@ -66,14 +67,28 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
 
     try {
       final emailVerified = await _verifyEmailOtp();
-      // final phoneVerified = await _verifyPhoneOtp();
+      
 
       if (emailVerified ) {
         _showSnackBar("OTP verified successfully!", Colors.green);
         await Future.delayed(Duration(milliseconds: 500));
-        getIt<AppRouter>().push(const UserDetailsSetupScreen());
+
+        try{
+          await getIt<AuthCubit>().emailPhoneDetails(email: widget.email, phoneNumber: widget.phone);
+
+          getIt<AppRouter>().push(const UserDetailsSetupScreen());
+
+        } catch(e){
+          _showSnackBar("${e.toString()}", Colors.red);
+          print(e);
+          print(e.toString());
+        }
+
+        
+
+
       } else if (!emailVerified) {
-        _showSnackBar("OTP verified, but email OTP is incorrect", Colors.orange);
+        _showSnackBar("Email OTP is incorrect", Colors.orange);
       } else {
         _showSnackBar("OTP is incorrect. Please try again.", Colors.red);
       }
@@ -197,20 +212,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
 
                     const SizedBox(height: 30,),
 
-                    /*TextField(
-                      controller: _phoneOtpController,
-                      keyboardType: TextInputType.number,
-                      maxLength: 6,
-                      decoration: InputDecoration(
-                        labelText: "Phone OTP",
-                        hintText: "Enter 6-digit code",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(18),  
-                        ),
-                        counterText: "",                      // Hide character counter
-                      ),
-                    ),
-                    */
+                   
 
                     const SizedBox(height: 40),
 
