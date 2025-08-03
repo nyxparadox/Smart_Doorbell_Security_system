@@ -2,21 +2,21 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserModel {
   final String uid;
-  final String fullname;
-  final String username;
-  final String email;
-  final String phoneNumber;
-  final String address;
+  final String? fullname;
+  final String ?username;
+  final String? email;
+  final String? phoneNumber;                           // we have some chnages here " ? "
+  final String? address;
   final Timestamp createdAt;
   final String? fcmToken;
 
   UserModel({
     required this.uid,
-    required this.fullname,
-    required this.username,
-    required this.email,
-    required this.phoneNumber,
-    required this.address,
+    this.fullname,
+    this.username,
+    this.email,
+    this.phoneNumber,
+    this.address,
     Timestamp? createdAt,
     this.fcmToken,
   }) : createdAt = createdAt ?? Timestamp.now();
