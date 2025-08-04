@@ -1,17 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserModel {
-  final String uid;
+  final String? uid;
   final String? fullname;
   final String ?username;
   final String? email;
-  final String? phoneNumber;                           // we have some chnages here " ? "
+  final String? phoneNumber;                           
   final String? address;
   final Timestamp createdAt;
   final String? fcmToken;
 
   UserModel({
-    required this.uid,
+    this.uid,
     this.fullname,
     this.username,
     this.email,
