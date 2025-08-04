@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:doorsnap/Data/Models/user_model.dart';
 import 'package:doorsnap/Data/Service/base_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:flutter/material.dart';
 
 class AuthRepository extends BaseRepository {
   Future<UserModel> emailPhoneDetails({
@@ -34,7 +35,8 @@ class AuthRepository extends BaseRepository {
     try {
       final usernameExists = await checkUsernameExists(username);
       if (usernameExists) {
-        throw Exception("username already exists");
+        throw Exception("Username already exists");
+        
       }
 
       final userData = UserModel(
