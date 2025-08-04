@@ -228,4 +228,13 @@ class _UserDetailsSetupScreenState extends State<UserDetailsSetupScreen> {
       ),
     );
   }
+
+  @override
+  void dispose() {
+    _fullNameController.dispose();
+    _usernameController.dispose();
+    _addressController.dispose();
+    super.dispose();
+  }
+
 }
