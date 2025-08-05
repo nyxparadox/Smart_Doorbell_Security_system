@@ -70,7 +70,7 @@ class _PasswordSetupScreenState extends State<PasswordSetupScreen> {
 
     try {
 
-      // Get the current user's email from state or widget parameter
+      // Geting the current user's email from state or widget parameter
       final authCubit = getIt<AuthCubit>();
       final currentState = authCubit.state;
 
@@ -86,7 +86,7 @@ class _PasswordSetupScreenState extends State<PasswordSetupScreen> {
         email: userEmail,
         password: _passwordController.text,
       );
-                             //  password saving process
+      //                       password saving process
       await Future.delayed(const Duration(seconds: 2));
       
       if (mounted) {
@@ -95,15 +95,12 @@ class _PasswordSetupScreenState extends State<PasswordSetupScreen> {
       }
     } catch (e) {
       if (mounted) {
-        // _showErrorSnackBar('Failed to create password. Please try again.');
 
 
         String errorMessage = 'Failed to create password. Please try again.';
 
         if (e.toString().contains('email-already-in-use')) {
           errorMessage = 'This email is already registered with a password.';
-        } else if (e.toString().contains('weak-password')) {
-          errorMessage = 'Password is too weak. Please choose a stronger password.';
         } else if (e.toString().contains('User email not found')) {
           errorMessage = 'Session expired. Please start signup process again.';
         }
