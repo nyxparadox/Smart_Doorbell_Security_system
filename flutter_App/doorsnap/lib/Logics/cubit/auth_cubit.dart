@@ -18,7 +18,7 @@ class AuthCubit extends Cubit<AuthState> {
 
   
 
-
+//       this will called after otp verification -creates anonymous user with email/phone
 
   Future<void> emailPhoneDetails({
     
@@ -70,7 +70,24 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
+  Future<void> linkPasswordToAccount({
+    required String email,
+    required String password
+  }) async {
+    try{
+      emit(state.copyWith(status: AuthStatus.loading));
 
+     _authRepository.linkEmailPassword(
+      email: email,
+      password: password,
+    );
+
+    emit(state.copyWith(status: AuthStatus.authenticated));    // here is change user: user in original
+
+    }catch(e){
+      emit(state.copyWith(status: AuthStatus.error, error: e.toString()));
+    }
+  }
 
   @override
   Future<void> close() {

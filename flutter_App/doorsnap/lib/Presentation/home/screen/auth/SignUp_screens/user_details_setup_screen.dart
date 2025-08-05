@@ -8,7 +8,8 @@ import 'package:doorsnap/Router/app_router.dart';
 import 'package:flutter/material.dart';
 
 class UserDetailsSetupScreen extends StatefulWidget {
-  UserDetailsSetupScreen({super.key});
+  final String? email;
+  UserDetailsSetupScreen({super.key, this.email});
 
   @override
   State<UserDetailsSetupScreen> createState() => _UserDetailsSetupScreenState();
@@ -63,7 +64,7 @@ class _UserDetailsSetupScreenState extends State<UserDetailsSetupScreen> {
         address: _addressController.text,
       );
 
-      getIt<AppRouter>().push(PasswordSetupScreen());
+      getIt<AppRouter>().push(PasswordSetupScreen(email: widget.email,));
       
     } catch (e) {
       log(e.toString());

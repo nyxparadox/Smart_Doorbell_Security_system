@@ -1,8 +1,10 @@
 import 'dart:developer';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doorsnap/Data/Models/user_model.dart';
 import 'package:doorsnap/Data/Service/base_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 // import 'package:flutter/material.dart';
 
 class AuthRepository extends BaseRepository {
@@ -92,5 +94,49 @@ class AuthRepository extends BaseRepository {
       print('error checking username $e');
       return false;
     }
+  }
+
+
+  // link email/password to anonymous account
+  Future<void> linkEmailPassword({
+    required String email,
+    required String password,
+  }) async {
+    try{
+
+      log("starting email password linking...");
+
+      if (auth.currentUser == null){
+        throw Exception("no current user to link credentialto ");
+      }
+
+      String currentUid = auth.currentUser!.uid;
+      log("Linking credential to user $currentUid");
+
+      
+      // Create email/password credential
+      final credential = firebase_auth.EmailAuthProvider.credential(
+        email: email,
+        password: password,
+      );
+
+
+
+      UserCredential linkedCredential = await auth.currentUser!.linkWithCredential(credential);
+      
+      if (linkedCredential.user == null) {
+        throw Exception('Linking failed - no user returned');
+      }
+      
+      log('✅ Email/password linked successfully to: ${linkedCredential.user!.uid}');
+
+      
+
+    }catch(e){
+      print("Error linking email and passwoed");
+      throw Exception("Failed to link email/password: $e");
+    }
+     
+
   }
 }
