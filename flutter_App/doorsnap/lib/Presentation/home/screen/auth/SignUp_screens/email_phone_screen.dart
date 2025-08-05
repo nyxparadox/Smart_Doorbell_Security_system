@@ -235,7 +235,7 @@ class _EmailPhoneScreenState extends State<EmailPhoneScreen> {
               ),
 
               padding: const EdgeInsets.only(
-                top: 50,
+                top: 30,
                 bottom: 50,
                 left: 25,
                 right: 25,
@@ -249,7 +249,7 @@ class _EmailPhoneScreenState extends State<EmailPhoneScreen> {
                       height: 300,
                       decoration: BoxDecoration(),
                       child: ClipOval(
-                        child: Image.asset("assets/images/3d_signUp.png"),
+                        child: Image.asset('assets/images/signUp.png'),
                       ),
                     ),
 
