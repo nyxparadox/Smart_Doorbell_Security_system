@@ -76,7 +76,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
         try{
           await getIt<AuthCubit>().emailPhoneDetails(email: widget.email, phoneNumber: widget.phone);
 
-          getIt<AppRouter>().push( UserDetailsSetupScreen());
+          getIt<AppRouter>().push( UserDetailsSetupScreen(email: widget.email,));
 
         } catch(e){
           _showSnackBar("${e.toString()}", Colors.red);

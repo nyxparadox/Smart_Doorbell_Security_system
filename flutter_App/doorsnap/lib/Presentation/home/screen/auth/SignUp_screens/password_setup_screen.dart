@@ -1,12 +1,14 @@
 
 import 'package:doorsnap/Data/Service/service_locator.dart';
+import 'package:doorsnap/Logics/cubit/auth_cubit.dart';
 import 'package:doorsnap/Presentation/home/home_page.dart';
 import 'package:doorsnap/Router/app_router.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
+// import 'package:get_it/get_it.dart';
 
 class PasswordSetupScreen extends StatefulWidget {
-  const PasswordSetupScreen({super.key});
+  final String? email;
+  const PasswordSetupScreen({super.key, this.email});
 
   @override
   State<PasswordSetupScreen> createState() => _PasswordSetupScreenState();
@@ -67,7 +69,24 @@ class _PasswordSetupScreenState extends State<PasswordSetupScreen> {
     });
 
     try {
-      // Simulate API call or password saving process
+
+      // Get the current user's email from state or widget parameter
+      final authCubit = getIt<AuthCubit>();
+      final currentState = authCubit.state;
+
+      String? userEmail = widget.email ?? currentState.user?.email;
+
+      if (userEmail == null || userEmail.isEmpty) {
+        throw 'User email not found. Please restart the signup process.';
+      }
+
+       print('🔐 Linking email/password for: $userEmail');
+
+       await authCubit.linkPasswordToAccount(
+        email: userEmail,
+        password: _passwordController.text,
+      );
+                             //  password saving process
       await Future.delayed(const Duration(seconds: 2));
       
       if (mounted) {
@@ -76,7 +95,20 @@ class _PasswordSetupScreenState extends State<PasswordSetupScreen> {
       }
     } catch (e) {
       if (mounted) {
-        _showErrorSnackBar('Failed to create password. Please try again.');
+        // _showErrorSnackBar('Failed to create password. Please try again.');
+
+
+        String errorMessage = 'Failed to create password. Please try again.';
+
+        if (e.toString().contains('email-already-in-use')) {
+          errorMessage = 'This email is already registered with a password.';
+        } else if (e.toString().contains('weak-password')) {
+          errorMessage = 'Password is too weak. Please choose a stronger password.';
+        } else if (e.toString().contains('User email not found')) {
+          errorMessage = 'Session expired. Please start signup process again.';
+        }
+        
+        _showErrorSnackBar(errorMessage);
       }
     } finally {
       if (mounted) {
