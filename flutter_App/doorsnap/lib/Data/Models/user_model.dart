@@ -9,6 +9,7 @@ class UserModel {
   final String? address;
   final Timestamp createdAt;
   final String? fcmToken;
+  final String? deviceId;
 
   UserModel({
     this.uid,
@@ -19,6 +20,7 @@ class UserModel {
     this.address,
     Timestamp? createdAt,
     this.fcmToken,
+    this.deviceId,
   }) : createdAt = createdAt ?? Timestamp.now();
 
   UserModel copyWith({
@@ -30,6 +32,7 @@ class UserModel {
     String? address,
     Timestamp? createdAt,
     String? fcmToken,
+    String? deviceId
   }) {
     return UserModel(
       uid: uid ?? this.uid,
@@ -40,6 +43,7 @@ class UserModel {
       address: address ?? this.address,
       createdAt: createdAt ?? this.createdAt,
       fcmToken: fcmToken ?? this.fcmToken,
+      deviceId: deviceId ?? this.deviceId,
     );
   }
 
@@ -55,6 +59,7 @@ class UserModel {
       "address" : address,
       "createdAt" : createdAt,
       "fcmToken" : fcmToken,
+      "deviceId" : deviceId,
     };
 
   }
@@ -75,6 +80,7 @@ class UserModel {
       address: data['address'] ?? '',
       createdAt: data['createdAt'] ?? Timestamp.now(),
       fcmToken: data['fcmToken'],
+      deviceId: data['deviceId'] ?? '',
     );
   }
 }
