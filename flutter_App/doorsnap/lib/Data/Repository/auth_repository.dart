@@ -139,4 +139,37 @@ class AuthRepository extends BaseRepository {
      
 
   }
+
+
+  Future<void> updateDeviceIdData(String uid, Map<String, dynamic> updatedDeviceData) async {
+    try {
+      await firestore.collection('users').doc(uid).update(updatedDeviceData);
+      log('Device ID updated successfully in Firestore');
+    } catch (e) {
+      log('Error updating device ID: $e');
+      throw "Failed to update device ID: $e";
+    }
+  }
+
+
+    Future<UserModel> deviceIdDetails({
+    required String deviceId,
+  }) async {
+    try {
+      
+
+      final userDeviceData = UserModel(
+        deviceId: deviceId,
+      );
+      final uid = auth.currentUser!.uid;      // this is after when we have user authentication has been already done
+      final updatedDeviceData = {
+        'deviceId' : deviceId,
+      };
+      await updateUserData(uid, updatedDeviceData);
+      return userDeviceData;
+    } catch (e) {
+      log(e.toString());
+      rethrow;
+    }
+  }
 }

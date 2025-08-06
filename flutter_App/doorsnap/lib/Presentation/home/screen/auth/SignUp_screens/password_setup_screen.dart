@@ -1,7 +1,7 @@
 
 import 'package:doorsnap/Data/Service/service_locator.dart';
 import 'package:doorsnap/Logics/cubit/auth_cubit.dart';
-import 'package:doorsnap/Presentation/home/home_page.dart';
+// import 'package:doorsnap/Presentation/home/home_page.dart';
 import 'package:doorsnap/Presentation/home/screen/device_id_registration_screen.dart';
 import 'package:doorsnap/Router/app_router.dart';
 import 'package:flutter/material.dart';
@@ -92,7 +92,7 @@ class _PasswordSetupScreenState extends State<PasswordSetupScreen> {
       
       if (mounted) {
         _showSuccessSnackBar('Password created successfully!');
-        getIt<AppRouter>().push(const DeviceIdRegistrationScreen());
+        getIt<AppRouter>().push( const DeviceIdRegistrationScreen());
       }
     } catch (e) {
       if (mounted) {
