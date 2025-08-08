@@ -81,6 +81,40 @@ class AuthRepository extends BaseRepository {
     }
   }
 
+
+  Future<UserModel> getUserData(String uid) async {
+    try {
+      final doc = await firestore.collection("users").doc(uid).get();
+      if (!doc.exists){
+        throw "User not found";
+      }
+      return UserModel.fromFirestore(doc);
+    }catch (e) {
+      throw "Failed to get user data";
+    }
+  }
+
+
+
+  Future<UserModel> signIn({
+    required String email,
+    required String password,
+  }) async {
+    try {
+      final userCredential = await auth.signInWithEmailAndPassword(
+        email: email,
+        password: password);
+        if (userCredential.user == null){
+          throw "User not found";
+        }
+        final userData = await getUserData(userCredential.user!.uid);
+        return userData;
+    }catch (e) {
+      log(e.toString());
+      rethrow;
+    }
+  }
+
   
 
   Future<bool> checkUsernameExists(String username) async {
