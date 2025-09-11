@@ -34,7 +34,7 @@ It allows users to **view visitor logs**, manage their **profile & settings**, a
 ### Setup Steps
 1. **Clone the repository**  
    ```bash
-   git clone https://github.com/your-username/doorsnap.git
+   git clone https://github.com/nyxparadox/Smart_Doorbell_Security_system.git
    cd doorsnap
 
 
