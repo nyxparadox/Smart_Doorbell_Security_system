@@ -4,6 +4,7 @@ import 'package:doorsnap/Data/Service/service_locator.dart';
 import 'package:doorsnap/Presentation/home/screen/aboutUsPage.dart';
 import 'package:doorsnap/Presentation/home/screen/auth/login_screen.dart';
 import 'package:doorsnap/Router/app_router.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -28,6 +29,14 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     _getUserDeviceId();
+    _getToken();
+  }
+
+  Future<void> _getToken() async {
+    String? token = await FirebaseMessaging.instance.getToken();
+    print("Device FCM Token: $token");
+    // This function is a placeholder for getting the FCM token
+    // Implement FCM token retrieval and storage as needed
   }
 
   // we here take the current user's deviceId from their user document
