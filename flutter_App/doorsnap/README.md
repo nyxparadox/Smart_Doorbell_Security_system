@@ -1,16 +1,51 @@
-# doorsnap
+# DoorSnap – Mobile App
 
-A new Flutter project.
+DoorSnap is the **Flutter mobile application** for the Smart Doorbel System project.  
+It allows users to **view visitor logs**, manage their **profile & settings**, and receive **real-time notifications** when a visitor arrives at their door.  
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+## ✨ Features
+- 🔐 **User Authentication** – Secure login/signup using Firebase Authentication.  
+- 📑 **Visitor Log** – Shows a list of visitors with photo, timestamp, and device ID.  
+- 🔔 **Notifications** – Real-time alerts when new visitors are detected.  
+- 👤 **Profile Management** – Update user details and linked device ID.  
+- ⚙️ **Settings Page** – Manage account settings and app preferences.  
 
-A few resources to get you started if this is your first Flutter project:
+---
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## 🛠️ Tech Stack
+- **Frontend:** Flutter (Dart)  
+- **State Management:** Bloc / Cubit  
+- **Database:** Firebase Firestore  
+- **Authentication:** Firebase Auth  
+- **Image Storage:** Cloudinary (images stored, URL saved in Firestore)  
+- **Notifications:** Firebase Cloud Messaging (FCM)  
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Flutter SDK installed ([Install Guide](https://docs.flutter.dev/get-started/install))  
+- Firebase Project setup (Auth + Firestore + FCM)  
+- Cloudinary account for image hosting  
+
+### Setup Steps
+1. **Clone the repository**  
+   ```bash
+   git clone https://github.com/your-username/doorsnap.git
+   cd doorsnap
+
+
+---
+
+## 👨‍💻 Author
+Developed by **ROHIT SINGH** AKA **Nyx**  
+📧 paradoxzsite@gmail.com  
+🔗 https://www.linkedin.com/in/rohit-singh-0a889437b/  
+
+---
+
+## 📝 License
+This project is for **educational purposes** and part of a college project.  
