@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:doorsnap/Data/Service/service_locator.dart';
 import 'package:doorsnap/Presentation/home/screen/aboutUsPage.dart';
 import 'package:doorsnap/Presentation/home/screen/auth/login_screen.dart';
+import 'package:doorsnap/Presentation/home/screen/user_profile_screen.dart';
 import 'package:doorsnap/Router/app_router.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -23,13 +25,28 @@ class _HomePageState extends State<HomePage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   String? _userDeviceId;
+  String? _fullName;
+  String? _username;
+  String? _address;
+  String? _phoneNumber;
+  String? _email;
   bool _isLoading = true;
+  String? _profileImageUrl;
 
   @override
   void initState() {
     super.initState();
     _getUserDeviceId();
+    _getUserInformation();
+    _loadProfileImage();
     _getToken();
+  }
+
+    Future<void> _loadProfileImage() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _profileImageUrl = prefs.getString('uploadedImageUrl');
+    });
   }
 
   Future<void> _getToken() async {
@@ -68,6 +85,34 @@ class _HomePageState extends State<HomePage> {
       _showErrorSnackBar('Error loading user data: $e');
     }
   }
+
+  // Fetch additional user information
+
+  Future<void> _getUserInformation() async {
+    final currentUser = _auth.currentUser;
+    if (currentUser != null) {
+      try {
+        final userDoc = await _firestore
+            .collection('users')
+            .doc(currentUser.uid)
+            .get();
+
+        if (userDoc.exists) {
+          final data = userDoc.data();
+          setState(() {
+            _fullName = data?['fullName'] ?? '';
+            _username = data?['username'] ?? '';
+            _address = data?['address'] ?? '';
+            _phoneNumber = data?['phoneNumber'] ?? '';
+            _email = data?['email'] ?? currentUser.email ?? '';
+          });
+        }
+      } catch (e) {
+        _showErrorSnackBar('Error loading user info: $e');
+      }
+    }
+  }
+
 
   void _showErrorSnackBar(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -123,8 +168,9 @@ class _HomePageState extends State<HomePage> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        backgroundColor: const Color.fromARGB(255, 52, 105, 196),
+        backgroundColor:  Color.fromARGB(255, 16, 56, 141),
         elevation: 0,
+        centerTitle: true,
 
 
         leading: Builder(
@@ -156,7 +202,12 @@ class _HomePageState extends State<HomePage> {
             DrawerHeader(
               padding: const EdgeInsets.only(left: 20, top: 10),
               decoration: const BoxDecoration(
-                color: Color.fromARGB(255, 52, 105, 196),
+                color: Color.fromARGB(255, 26, 70, 165),
+              gradient: LinearGradient(
+                colors: [ Color.fromARGB(255, 16, 56, 141), Color.fromARGB(255, 14, 118, 170)],
+                begin: Alignment.bottomCenter,
+                end: Alignment.topCenter,
+              )
               ),
               child: Column(
                 
@@ -165,20 +216,24 @@ class _HomePageState extends State<HomePage> {
                   CircleAvatar(
                     
                     radius: 40,
-                    backgroundImage: AssetImage('assets/images/defaultProfileImage.png'),
+                     backgroundImage: _profileImageUrl == null || _profileImageUrl!.isEmpty
+                        ? const AssetImage('assets/images/defaultProfileImage.png')
+                            as ImageProvider
+                        : NetworkImage(_profileImageUrl!),
+                     
                   ),
 
-                  Text('Rohit Singh', style:  TextStyle(color: Colors.white, fontSize: 18),),  // this should be replaced with the users name from database
-                  Text('+91 7590018760' ,  style: TextStyle(color:  Colors.grey.shade300),)     // this should be replaced with the users phone number from database
+                  Text("$_fullName" , style:  TextStyle(color: Colors.white, fontSize: 18),),  // this should be replaced with the users name from database
+                  Text("$_phoneNumber",  style: TextStyle(color:  Colors.grey.shade300),)     // this should be replaced with the users phone number from database
                 ],
               ),
             ),
             ListTile(
               leading: const Icon(Icons.account_circle),
               title: const Text('My Profile'),
-              onTap: () {
-                Navigator.pop(context);
-              },
+              onTap: () => getIt<AppRouter>().push(const UserProfileScreen())
+                
+              
             ),
             ListTile(
               leading: const Icon(Icons.settings),
