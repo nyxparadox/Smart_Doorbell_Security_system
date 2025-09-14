@@ -1,8 +1,4 @@
-
-
-
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
@@ -17,8 +13,7 @@ class CloudinaryImageUploader {
     required this.uploadPreset,
   });
 
-  /// Picks image from gallery and uploads it to Cloudinary.
-  /// Returns the uploaded image URL or null if failed/canceled.
+
   Future<String?> pickAndUploadImage() async {
     try {
       final XFile? image = await _picker.pickImage(source: ImageSource.gallery);

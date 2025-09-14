@@ -92,14 +92,14 @@ class _UserProfileScreenState extends State<UserProfileScreen> with TickerProvid
   }
 
   Future<void> _loadUploadedImageUrl() async {
-    final prefs = await SharedPreferences.getInstance();
+    final prefs = await SharedPreferences.getInstance();          // store image url in shared prefrences
     setState(() {
       _uploadedImageUrl = prefs.getString('uploadedImageUrl');
     });
   }
 
   Future<void> _saveUploadedImageUrl(String url) async {
-    final prefs = await SharedPreferences.getInstance();
+    final prefs = await SharedPreferences.getInstance();   
     await prefs.setString('uploadedImageUrl', url);
   }
 
@@ -116,7 +116,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> with TickerProvid
       try {
         final userDoc = await _firestore
             .collection('users')
-            .doc(currentUser.uid)
+            .doc(currentUser.uid)                     // here we are fetching user data from firestore so, we can show it on profile screen
             .get();
 
         if (userDoc.exists) {
@@ -158,7 +158,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> with TickerProvid
                     _buildProfileStats(theme, isTablet),
                     _buildActionButtons(theme, isTablet),
                     _buildProfileDetails(theme, isTablet),
-                    const SizedBox(height: 100), // Bottom padding
+                    const SizedBox(height: 100),                 // Bottom padding
                   ],
                 ),
               ),
@@ -382,7 +382,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> with TickerProvid
             flex: 2,
             child: ElevatedButton.icon(
               onPressed: () {
-                // Navigate to edit profile
+                      // Navigate to edit profile
               },
               icon: const Icon(Icons.edit, size: 18),
               label: const Text('Edit Profile'),
@@ -455,7 +455,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> with TickerProvid
   }
 
   void _editField(String fieldType) {
-    // Implement field editing logic
+    // Here we will Implement field editing logic in future
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text('Edit $fieldType functionality coming soon'),
