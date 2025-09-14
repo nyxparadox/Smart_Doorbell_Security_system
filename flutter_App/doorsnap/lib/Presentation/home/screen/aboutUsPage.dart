@@ -10,7 +10,7 @@ class AboutUsPage extends StatelessWidget {
   static const String linkedinUrl = "https://www.linkedin.com/in/rohit-singh-nyx";
   static const String supportEmail = "support@doorsnap.com";
 
-  // Helper to launch URLs with proper error handling
+  // Helper to launch URLs 
   Future<void> _launchURL(String url) async {
     try {
       final uri = Uri.parse(url);
@@ -412,7 +412,7 @@ class AboutUsPage extends StatelessWidget {
           ),
           const SizedBox(height: 4),
           Text(
-            "Version 1.0.0",
+            "Version 2.11.04",
             style: TextStyle(
               fontSize: 11,
               color: Colors.grey.shade500,
