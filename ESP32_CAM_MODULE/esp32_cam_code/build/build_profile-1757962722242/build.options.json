@@ -1,0 +1,9 @@
+{
+  "additionalFiles": "../../..,../../..",
+  "compiler.optimization_flags": "-Os",
+  "customBuildProperties": "",
+  "fqbn": "esp32:esp32:esp32cam:CPUFreq=240,FlashFreq=80,FlashMode=qio,PartitionScheme=huge_app,DebugLevel=none,EraseFlash=none",
+  "hardwareFolders": "/home/paradox/.arduino15/packages",
+  "otherLibrariesFolders": "/home/paradox/Documents/Arduino/libraries",
+  "sketchLocation": "/home/paradox/Documents/FLUTTER PROJECTS/Smart Doorbell Security System/Smart_Doorbell_Security_system/ESP32_CAM_MODULE/esp32_cam_code"
+}

@@ -1,0 +1,10 @@
+/home/paradox/Documents/FLUTTER\ PROJECTS/Smart\ Doorbell\ Security\ System/Smart_Doorbell_Security_system/ESP32_CAM_MODULE/esp32_cam_code/build/core/MacAddress.cpp.o: \
+ /home/paradox/.arduino15/packages/esp32/hardware/esp32/3.3.0/cores/esp32/MacAddress.cpp \
+ /home/paradox/.arduino15/packages/esp32/hardware/esp32/3.3.0/cores/esp32/MacAddress.h \
+ /home/paradox/.arduino15/packages/esp32/hardware/esp32/3.3.0/cores/esp32/WString.h \
+ /home/paradox/.arduino15/packages/esp32/hardware/esp32/3.3.0/cores/esp32/pgmspace.h \
+ /home/paradox/.arduino15/packages/esp32/hardware/esp32/3.3.0/cores/esp32/Printable.h \
+ /home/paradox/.arduino15/packages/esp32/tools/esp32-arduino-libs/idf-release_v5.5-b66b5448-v1/esp32/include/newlib/platform_include/stdio.h \
+ /home/paradox/.arduino15/packages/esp32/hardware/esp32/3.3.0/cores/esp32/Print.h \
+ /home/paradox/.arduino15/packages/esp32/hardware/esp32/3.3.0/cores/esp32/WString.h \
+ /home/paradox/.arduino15/packages/esp32/hardware/esp32/3.3.0/cores/esp32/Printable.h

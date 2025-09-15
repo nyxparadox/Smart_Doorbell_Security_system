@@ -1,0 +1,30 @@
+/home/paradox/Documents/FLUTTER\ PROJECTS/Smart\ Doorbell\ Security\ System/Smart_Doorbell_Security_system/ESP32_CAM_MODULE/esp32_cam_code/build/build_profile-1757962722242/core/esp32-hal-periman.c.o: \
+ /home/paradox/.arduino15/internal/esp32_esp32_3.3.0_907e0a754271095c/cores/esp32/esp32-hal-periman.c \
+ /home/paradox/.arduino15/internal/esp32_esp32_3.3.0_907e0a754271095c/cores/esp32/esp32-hal-log.h \
+ /home/paradox/.arduino15/internal/esp32_esp32-arduino-libs_idf-release_v5.5-b66b5448-v1_ffaa2d367c/esp32/qio_qspi/include/sdkconfig.h \
+ /home/paradox/.arduino15/internal/esp32_esp32-arduino-libs_idf-release_v5.5-b66b5448-v1_ffaa2d367c/esp32/include/esp_timer/include/esp_timer.h \
+ /home/paradox/.arduino15/internal/esp32_esp32-arduino-libs_idf-release_v5.5-b66b5448-v1_ffaa2d367c/esp32/include/newlib/platform_include/stdio.h \
+ /home/paradox/.arduino15/internal/esp32_esp32-arduino-libs_idf-release_v5.5-b66b5448-v1_ffaa2d367c/esp32/include/esp_common/include/esp_err.h \
+ /home/paradox/.arduino15/internal/esp32_esp32-arduino-libs_idf-release_v5.5-b66b5448-v1_ffaa2d367c/esp32/include/esp_common/include/esp_compiler.h \
+ /home/paradox/.arduino15/internal/esp32_esp32-arduino-libs_idf-release_v5.5-b66b5448-v1_ffaa2d367c/esp32/include/esp_hw_support/include/esp_etm.h \
+ /home/paradox/.arduino15/internal/esp32_esp32-arduino-libs_idf-release_v5.5-b66b5448-v1_ffaa2d367c/esp32/include/esp_rom/esp32/include/esp32/rom/ets_sys.h \
+ /home/paradox/.arduino15/internal/esp32_esp32-arduino-libs_idf-release_v5.5-b66b5448-v1_ffaa2d367c/esp32/include/log/include/esp_log.h \
+ /home/paradox/.arduino15/internal/esp32_esp32-arduino-libs_idf-release_v5.5-b66b5448-v1_ffaa2d367c/esp32/include/esp_rom/include/esp_rom_sys.h \
+ /home/paradox/.arduino15/internal/esp32_esp32-arduino-libs_idf-release_v5.5-b66b5448-v1_ffaa2d367c/esp32/include/soc/esp32/include/soc/reset_reasons.h \
+ /home/paradox/.arduino15/internal/esp32_esp32-arduino-libs_idf-release_v5.5-b66b5448-v1_ffaa2d367c/esp32/include/log/include/esp_log_config.h \
+ /home/paradox/.arduino15/internal/esp32_esp32-arduino-libs_idf-release_v5.5-b66b5448-v1_ffaa2d367c/esp32/include/log/include/esp_log_level.h \
+ /home/paradox/.arduino15/internal/esp32_esp32-arduino-libs_idf-release_v5.5-b66b5448-v1_ffaa2d367c/esp32/include/esp_common/include/esp_assert.h \
+ /home/paradox/.arduino15/internal/esp32_esp32-arduino-libs_idf-release_v5.5-b66b5448-v1_ffaa2d367c/esp32/include/log/include/esp_log_color.h \
+ /home/paradox/.arduino15/internal/esp32_esp32-arduino-libs_idf-release_v5.5-b66b5448-v1_ffaa2d367c/esp32/include/log/include/esp_log_buffer.h \
+ /home/paradox/.arduino15/internal/esp32_esp32-arduino-libs_idf-release_v5.5-b66b5448-v1_ffaa2d367c/esp32/include/log/include/esp_log_timestamp.h \
+ /home/paradox/.arduino15/internal/esp32_esp32-arduino-libs_idf-release_v5.5-b66b5448-v1_ffaa2d367c/esp32/include/log/include/esp_log_write.h \
+ /home/paradox/.arduino15/internal/esp32_esp32-arduino-libs_idf-release_v5.5-b66b5448-v1_ffaa2d367c/esp32/include/log/include/esp_log_format.h \
+ /home/paradox/.arduino15/internal/esp32_esp32-arduino-libs_idf-release_v5.5-b66b5448-v1_ffaa2d367c/esp32/include/log/include/esp_log_args.h \
+ /home/paradox/.arduino15/internal/esp32_esp32-arduino-libs_idf-release_v5.5-b66b5448-v1_ffaa2d367c/esp32/include/esp_common/include/esp_macros.h \
+ /home/paradox/.arduino15/internal/esp32_esp32-arduino-libs_idf-release_v5.5-b66b5448-v1_ffaa2d367c/esp32/include/esp_common/include/esp_assert.h \
+ /home/paradox/.arduino15/internal/esp32_esp32-arduino-libs_idf-release_v5.5-b66b5448-v1_ffaa2d367c/esp32/include/log/include/esp_log_attr.h \
+ /home/paradox/.arduino15/internal/esp32_esp32-arduino-libs_idf-release_v5.5-b66b5448-v1_ffaa2d367c/esp32/include/esp_common/include/esp_attr.h \
+ /home/paradox/.arduino15/internal/esp32_esp32-arduino-libs_idf-release_v5.5-b66b5448-v1_ffaa2d367c/esp32/include/log/include/esp_private/log_attr.h \
+ /home/paradox/.arduino15/internal/esp32_esp32_3.3.0_907e0a754271095c/cores/esp32/esp32-hal-periman.h \
+ /home/paradox/.arduino15/internal/esp32_esp32-arduino-libs_idf-release_v5.5-b66b5448-v1_ffaa2d367c/esp32/include/soc/esp32/include/soc/soc_caps.h \
+ /home/paradox/.arduino15/internal/esp32_esp32-arduino-libs_idf-release_v5.5-b66b5448-v1_ffaa2d367c/esp32/include/esp_common/include/esp_bit_defs.h

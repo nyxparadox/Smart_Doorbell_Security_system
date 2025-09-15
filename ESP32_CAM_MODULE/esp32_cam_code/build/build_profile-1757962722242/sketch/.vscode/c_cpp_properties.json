@@ -1,0 +1,27 @@
+#line 1 "/home/paradox/Documents/FLUTTER PROJECTS/Smart Doorbell Security System/Smart_Doorbell_Security_system/ESP32_CAM_MODULE/esp32_cam_code/.vscode/c_cpp_properties.json"
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "/usr/include/llvm-18/llvm/Debuginfod"
+            ],
+            "defines": [],
+            "cStandard": "c17",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "linux-clang-x64"
+        },
+        {
+            "name": "abcd",
+            "includePath": [
+                "${workspaceFolder}/**"
+            ],
+            "defines": [],
+            "cStandard": "c17",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "linux-clang-x64"
+        }
+    ],
+    "version": 4
+}

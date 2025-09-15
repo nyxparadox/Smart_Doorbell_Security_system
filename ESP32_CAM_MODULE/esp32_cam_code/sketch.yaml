@@ -1,0 +1,15 @@
+profiles:
+  profile-1757962722242:
+    fqbn: esp32:esp32:esp32cam:CPUFreq=240,FlashFreq=80,FlashMode=qio,PartitionScheme=huge_app,DebugLevel=none,EraseFlash=none
+    platforms:
+      - platform: esp32:esp32 (3.3.0)
+    libraries:
+      - ArduinoJson (7.4.2)
+    programmer: ""
+    port: ""
+    port_config:
+      baudrate: "115200"
+      bits: "8"
+      parity: none
+      stop_bits: one
+default_profile: profile-1757962722242

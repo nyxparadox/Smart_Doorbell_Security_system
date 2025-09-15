@@ -1,0 +1,10 @@
+/home/paradox/Documents/FLUTTER\ PROJECTS/Smart\ Doorbell\ Security\ System/Smart_Doorbell_Security_system/ESP32_CAM_MODULE/esp32_cam_code/build/build_profile-1757962722242/core/MacAddress.cpp.o: \
+ /home/paradox/.arduino15/internal/esp32_esp32_3.3.0_907e0a754271095c/cores/esp32/MacAddress.cpp \
+ /home/paradox/.arduino15/internal/esp32_esp32_3.3.0_907e0a754271095c/cores/esp32/MacAddress.h \
+ /home/paradox/.arduino15/internal/esp32_esp32_3.3.0_907e0a754271095c/cores/esp32/WString.h \
+ /home/paradox/.arduino15/internal/esp32_esp32_3.3.0_907e0a754271095c/cores/esp32/pgmspace.h \
+ /home/paradox/.arduino15/internal/esp32_esp32_3.3.0_907e0a754271095c/cores/esp32/Printable.h \
+ /home/paradox/.arduino15/internal/esp32_esp32-arduino-libs_idf-release_v5.5-b66b5448-v1_ffaa2d367c/esp32/include/newlib/platform_include/stdio.h \
+ /home/paradox/.arduino15/internal/esp32_esp32_3.3.0_907e0a754271095c/cores/esp32/Print.h \
+ /home/paradox/.arduino15/internal/esp32_esp32_3.3.0_907e0a754271095c/cores/esp32/WString.h \
+ /home/paradox/.arduino15/internal/esp32_esp32_3.3.0_907e0a754271095c/cores/esp32/Printable.h
