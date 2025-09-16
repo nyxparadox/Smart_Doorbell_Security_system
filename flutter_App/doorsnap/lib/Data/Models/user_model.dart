@@ -66,8 +66,8 @@ class UserModel {
 
 
 
-  //It allows your Flutter app to convert a Firestore user document into a usable Dart object (UserModel),
-  // so you can easily access user info in your app code.
+  //It allows our Flutter app to convert a Firestore user document into a usable Dart object (UserModel),
+  // so we can easily access user info in our app code.
 
   factory UserModel.fromFirestore(DocumentSnapshot doc) {
     final data = doc.data() as Map<String, dynamic>;

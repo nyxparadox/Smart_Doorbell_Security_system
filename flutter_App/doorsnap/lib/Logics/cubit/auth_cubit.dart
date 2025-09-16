@@ -83,7 +83,7 @@ class AuthCubit extends Cubit<AuthState> {
       password: password,
     );
 
-    emit(state.copyWith(status: AuthStatus.authenticated));    // here is change user: user in original
+    emit(state.copyWith(status: AuthStatus.authenticated));    
 
     }catch(e){
       emit(state.copyWith(status: AuthStatus.error, error: e.toString()));

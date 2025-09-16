@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:doorsnap/Data/Service/service_locator.dart';
 import 'package:doorsnap/Presentation/home/screen/aboutUsPage.dart';
 import 'package:doorsnap/Presentation/home/screen/auth/login_screen.dart';
@@ -26,10 +25,7 @@ class _HomePageState extends State<HomePage> {
 
   String? _userDeviceId;
   String? _fullName;
-  String? _username;
-  String? _address;
   String? _phoneNumber;
-  String? _email;
   bool _isLoading = true;
   String? _profileImageUrl;
 
@@ -101,10 +97,7 @@ class _HomePageState extends State<HomePage> {
           final data = userDoc.data();
           setState(() {
             _fullName = data?['fullName'] ?? '';
-            _username = data?['username'] ?? '';
-            _address = data?['address'] ?? '';
             _phoneNumber = data?['phoneNumber'] ?? '';
-            _email = data?['email'] ?? currentUser.email ?? '';
           });
         }
       } catch (e) {
