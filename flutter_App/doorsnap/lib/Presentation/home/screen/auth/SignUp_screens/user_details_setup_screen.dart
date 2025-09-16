@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 
 class UserDetailsSetupScreen extends StatefulWidget {
   final String? email;
-  UserDetailsSetupScreen({super.key, this.email});
+  const UserDetailsSetupScreen({super.key, this.email});
 
   @override
   State<UserDetailsSetupScreen> createState() => _UserDetailsSetupScreenState();

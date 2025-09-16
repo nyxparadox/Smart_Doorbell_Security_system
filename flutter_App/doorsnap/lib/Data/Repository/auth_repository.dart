@@ -162,7 +162,7 @@ class AuthRepository extends BaseRepository {
         throw Exception('Linking failed - no user returned');
       }
       
-      log('✅ Email/password linked successfully to: ${linkedCredential.user!.uid}');
+      log('Email/password linked successfully to: ${linkedCredential.user!.uid}');
 
       
 

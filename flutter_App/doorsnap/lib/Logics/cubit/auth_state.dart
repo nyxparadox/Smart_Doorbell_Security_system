@@ -9,12 +9,7 @@ enum AuthStatus {
   unauthenticated,
   loading,
   error,
-  // passwordResetRequested,
-  // emailVerificationSent,
-  // emailVerified,
-  // passwordChanged,
-  // accountCreated,
-  // accountDeleted
+  
 }
 
 class AuthState extends Equatable{

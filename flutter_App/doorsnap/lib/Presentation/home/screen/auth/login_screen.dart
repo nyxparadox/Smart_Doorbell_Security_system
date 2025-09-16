@@ -5,7 +5,6 @@ import 'package:doorsnap/Logics/cubit/auth_state.dart';
 import 'package:doorsnap/Presentation/home/home_page.dart';
 import 'package:doorsnap/Presentation/home/screen/auth/SignUp_screens/email_phone_screen.dart';
 import 'package:doorsnap/Router/app_router.dart';
-// import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -226,7 +225,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ElevatedButton(
                         onPressed: _isLoading ? null : handleSignIn, // Call the actual send OTP function
                       child: _isLoading 
-                        ? Row(
+                        ?  Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               SizedBox(
@@ -238,7 +237,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                               ),
                               SizedBox(width: 10),
-                              Text(
+                               Text(
                                 "Login...",
                                 style: TextStyle(fontSize: 18, color: Colors.white),
                               ),
