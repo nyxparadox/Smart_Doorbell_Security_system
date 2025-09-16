@@ -1,0 +1,3 @@
+# Ignore the service account key file 
+# which contains sensitive information. you will get your own key file from Firebase Console.
+serviceAccountKey.json
