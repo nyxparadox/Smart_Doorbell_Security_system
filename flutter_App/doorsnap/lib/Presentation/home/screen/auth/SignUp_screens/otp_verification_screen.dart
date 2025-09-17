@@ -1,10 +1,10 @@
 
-
 import 'package:doorsnap/Data/Service/service_locator.dart';
 import 'package:doorsnap/Logics/cubit/auth_cubit.dart';
 import 'package:doorsnap/Presentation/home/screen/auth/SignUp_screens/email_phone_screen.dart';
 import 'package:doorsnap/Presentation/home/screen/auth/SignUp_screens/user_details_setup_screen.dart';
 import 'package:doorsnap/Router/app_router.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
 
@@ -42,7 +42,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
         print("Email OTP verification failed");
 
 
-        // Debug: Print stored OTP (remove in production)
+        // Debug: Print stored OTP (remove in production) ------------------xxxxx----------------
         String? storedOtp = SMTPEmailOTP.getStoredOTP(widget.email);
         print("Debug - Stored OTP: $storedOtp, Entered OTP: $enteredOtp");
         return false;
@@ -56,51 +56,52 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
 
   // Function to verify email OTPs
   Future<void> _verifyOtp() async {
-    if (_emailOtpController.text.trim().isEmpty) {
-      _showSnackBar("Please enter email OTP", Colors.red);
-      return;
-    }
-
-    setState(() {
-      _isVerifying = true;
-    });
-
-    try {
-      final emailVerified = await _verifyEmailOtp();
-      
-
-      if (emailVerified ) {
-        _showSnackBar("OTP verified successfully!", Colors.green);
-        await Future.delayed(Duration(milliseconds: 500));
-
-        try{
-          await getIt<AuthCubit>().emailPhoneDetails(email: widget.email, phoneNumber: widget.phone);
-
-          getIt<AppRouter>().push( UserDetailsSetupScreen(email: widget.email,));
-
-        } catch(e){
-          _showSnackBar("${e.toString()}", Colors.red);
-          print(e);
-          print(e.toString());
-        }
-
-        
-
-
-      } else if (!emailVerified) {
-        _showSnackBar("Email OTP is incorrect", Colors.orange);
-      } else {
-        _showSnackBar("OTP is incorrect. Please try again.", Colors.red);
-      }
-    } catch (e) {
-      _showSnackBar("Verification failed. Please try again.", Colors.red);
-      print("Error in _verifyOtp: $e");
-    } finally {
-      setState(() {
-        _isVerifying = false;
-      });
-    }
+  if (_emailOtpController.text.trim().isEmpty) {
+    _showSnackBar("Please enter email OTP", Colors.red);
+    return;
   }
+
+  setState(() {
+    _isVerifying = true;
+  });
+
+  try {
+    final emailVerified = await _verifyEmailOtp();
+
+    if (emailVerified) {
+      _showSnackBar("OTP verified successfully!", Colors.green);
+      await Future.delayed(Duration(milliseconds: 500));
+
+      try {
+        // Get FCM token before creating user
+        String? fcmToken = await FirebaseMessaging.instance.getToken();
+        print("FCM Token obtained: $fcmToken");
+
+        // Created user with FCM token
+        await getIt<AuthCubit>().emailPhoneDetails(
+          email: widget.email, 
+          phoneNumber: widget.phone,
+          fcmToken: fcmToken, // Pass the FCM token
+        );
+
+        getIt<AppRouter>().push(UserDetailsSetupScreen(email: widget.email));
+
+      } catch(e) {
+        _showSnackBar("${e.toString()}", Colors.red);
+        print(e);
+      }
+    } else {
+      _showSnackBar("Email OTP is incorrect", Colors.orange);
+    }
+  } catch (e) {
+    _showSnackBar("Verification failed. Please try again.", Colors.red);
+    print("Error in _verifyOtp: $e");
+  } finally {
+    setState(() {
+      _isVerifying = false;
+    });
+  }
+}
 
   // function for snackbars
   void _showSnackBar(String message, Color color) {
@@ -256,7 +257,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
 
                     SizedBox(height: 20),
 
-                    // Debug info (removed  when app is fully developed )
+                    // Debug info (removed  when app is fully developed )-----------xxxxxxxxxxxx-----------
                     if (widget.email.isNotEmpty)
                       TextButton(
                         onPressed: () {
