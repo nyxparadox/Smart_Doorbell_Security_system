@@ -1,16 +1,16 @@
 import 'dart:developer';
-
-// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doorsnap/Data/Models/user_model.dart';
 import 'package:doorsnap/Data/Service/base_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
-// import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthRepository extends BaseRepository {
   Future<UserModel> emailPhoneDetails({
     required String email,
     required String phoneNumber,
+    String? fcmToken,
   }) async {
     try {
       UserCredential userCredential = await auth
@@ -20,6 +20,7 @@ class AuthRepository extends BaseRepository {
         uid: userCredential.user!.uid,
         email: email,
         phoneNumber: phoneNumber,
+        fcmToken: fcmToken,
       );
       await saveUserData(user);
       return user;
@@ -82,17 +83,51 @@ class AuthRepository extends BaseRepository {
   }
 
 
+
   Future<UserModel> getUserData(String uid) async {
-    try {
-      final doc = await firestore.collection("users").doc(uid).get();
-      if (!doc.exists){
-        throw "User not found";
+  try {
+    log('Attempting to get user data for UID: $uid');
+    final doc = await firestore.collection("users").doc(uid).get();
+    
+    if (!doc.exists) {
+      log('User document not found for UID: $uid');
+      
+      // Check if there's a document with this email instead
+      final currentUser = auth.currentUser;
+      if (currentUser?.email != null) {
+        log('Searching for user by email: ${currentUser!.email}');
+        final querySnapshot = await firestore
+            .collection('users')
+            .where('email', isEqualTo: currentUser.email)
+            .limit(1)
+            .get();
+            
+        if (querySnapshot.docs.isNotEmpty) {
+          log('Found user document by email, updating UID');
+          final userData = querySnapshot.docs.first.data();
+          
+          // Update the document with correct UID
+          await firestore.collection('users').doc(uid).set(userData);
+          
+          // Delete old document if UID is different
+          if (querySnapshot.docs.first.id != uid) {
+            await firestore.collection('users').doc(querySnapshot.docs.first.id).delete();
+          }
+          
+          return UserModel.fromFirestore(await firestore.collection("users").doc(uid).get());
+        }
       }
-      return UserModel.fromFirestore(doc);
-    }catch (e) {
-      throw "Failed to get user data";
+      
+      throw "User document not found for UID: $uid";
     }
+    
+    log('Successfully retrieved user data for UID: $uid');
+    return UserModel.fromFirestore(doc);
+  } catch (e) {
+    log('Error getting user data for UID $uid: $e');
+    throw "Failed to get user data: ${e.toString()}";
   }
+}
 
 
 
@@ -162,16 +197,11 @@ class AuthRepository extends BaseRepository {
         throw Exception('Linking failed - no user returned');
       }
       
-      log('Email/password linked successfully to: ${linkedCredential.user!.uid}');
-
-      
-
+      log('Email/password linked successfully to: ${linkedCredential.user!.uid}');  
     }catch(e){
       print("Error linking email and passwoed");
       throw Exception("Failed to link email/password: $e");
     }
-     
-
   }
 
 
@@ -206,4 +236,85 @@ class AuthRepository extends BaseRepository {
       rethrow;
     }
   }
+
+
+
+  // for FCM token update
+  Future<void> updateFcmToken(String uid, Map<String, dynamic> updatedToken) async {
+  try {
+    await firestore.collection('users').doc(uid).update(updatedToken);
+    log('FCM token updated successfully in Firestore');
+  } catch (e) {
+    log('Error updating FCM token: $e');
+    throw "Failed to update FCM token: $e";
+  }
+}
+
+Future<UserModel> deviceFcmToken({
+  required String fcmToken,
+}) async {
+  try {
+    final userFcmData = UserModel(
+      fcmToken: fcmToken,
+    );
+    final uid = auth.currentUser!.uid;
+    final updatedFcmToken = {
+      'fcmToken': fcmToken,
+    };
+    await updateFcmToken(uid, updatedFcmToken);
+    return userFcmData;
+  } catch (e) {
+    log(e.toString());
+    rethrow;
+  }
+}
+
+  
+// Update user's profile image URL in Firestore
+Future<void> updateProfileImage(String uid, String imageUrl) async {
+  try {
+    await firestore.collection('users').doc(uid).update({
+      'profileImageUrl': imageUrl,
+      'profileUpdatedAt': Timestamp.now(),
+    });
+    log('Profile image updated successfully in Firestore');
+  } catch (e) {
+    log('Error updating profile image: $e');
+    throw "Failed to update profile image: $e";
+  }
+}
+
+
+// Get user's profile image URL from Firestore
+Future<String?> getUserProfileImage(String uid) async {
+  try {
+    final doc = await firestore.collection('users').doc(uid).get();
+    if (doc.exists) {
+      final data = doc.data() as Map<String, dynamic>;
+      return data['profileImageUrl'];
+    }
+    return null;
+  } catch (e) {
+    log('Error getting user profile image: $e');
+    return null;
+  }
+}
+
+
+// Clear user-specific data from SharedPreferences on logout
+Future<void> clearUserSpecificData(String uid) async {
+  try {
+    final prefs = await SharedPreferences.getInstance();
+    
+    // Clear user-specific keys
+    await prefs.remove('uploadedImageUrl_$uid');
+    await prefs.remove('userProfileCache_$uid');
+    // Add any other user-specific keys you might have
+    
+    log('User-specific data cleared for UID: $uid');
+  } catch (e) {
+    log('Error clearing user-specific data: $e');
+  }
+}
+
 }

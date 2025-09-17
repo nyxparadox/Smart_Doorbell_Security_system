@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doorsnap/Data/Repository/profile_image_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class UserProfileScreen extends StatefulWidget {
   const UserProfileScreen({super.key});
@@ -32,8 +31,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> with TickerProvid
   void initState() {
     super.initState();
     _setupAnimations();
-    _getUserInformation();
-    _loadUploadedImageUrl();
+    _getUserInformation(); // This will load profile image from Firestore
+    _animationController.forward();
   }
 
   void _setupAnimations() {
@@ -72,42 +71,43 @@ class _UserProfileScreenState extends State<UserProfileScreen> with TickerProvid
     uploadPreset: 'DoorSnap_users_profile_image',
   );
 
-  void _onEditImageTap() async {
-    setState(() {
-      _isLoading = true;
-    });
+  
+  Future<void> _onImageUploaded(String imageUrl) async {
+    final currentUser = _auth.currentUser;
+    if (currentUser != null) {
+      try {
+        // Save to Firestore
+        await _firestore.collection('users').doc(currentUser.uid).update({
+          'profileImageUrl': imageUrl,
+          'profileUpdatedAt': Timestamp.now(),
+        });
 
-    final imageUrl = await uploader.pickAndUploadImage();
-    if (imageUrl != null) {
-      setState(() {
-        _onImageUploaded(imageUrl);
-      });
-    } else {
-      print('Image upload canceled or failed');
+        // Update local state
+        setState(() {
+          _uploadedImageUrl = imageUrl;
+        });
+
+        // Show success message
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Profile picture updated successfully!'),
+            backgroundColor: Colors.green,
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          ),
+        );
+      } catch (e) {
+        print('Error saving profile image: $e');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Failed to update profile picture'),
+            backgroundColor: Colors.red,
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          ),
+        );
+      }
     }
-
-    setState(() {
-      _isLoading = false;
-    });
-  }
-
-  Future<void> _loadUploadedImageUrl() async {
-    final prefs = await SharedPreferences.getInstance();          // store image url in shared prefrences
-    setState(() {
-      _uploadedImageUrl = prefs.getString('uploadedImageUrl');
-    });
-  }
-
-  Future<void> _saveUploadedImageUrl(String url) async {
-    final prefs = await SharedPreferences.getInstance();   
-    await prefs.setString('uploadedImageUrl', url);
-  }
-
-  void _onImageUploaded(String imageUrl) {
-    setState(() {
-      _uploadedImageUrl = imageUrl;
-    });
-    _saveUploadedImageUrl(imageUrl);
   }
 
   Future<void> _getUserInformation() async {
@@ -116,7 +116,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> with TickerProvid
       try {
         final userDoc = await _firestore
             .collection('users')
-            .doc(currentUser.uid)                     // here we are fetching user data from firestore so, we can show it on profile screen
+            .doc(currentUser.uid)
             .get();
 
         if (userDoc.exists) {
@@ -128,12 +128,31 @@ class _UserProfileScreenState extends State<UserProfileScreen> with TickerProvid
             _phoneNumber = data?['phoneNumber'] ?? 'No phone provided';
             _email = data?['email'] ?? currentUser.email ?? 'No email';
             _userDeviceId = data?['deviceId'] ?? 'No device ID';
+            _uploadedImageUrl = data?['profileImageUrl']; // Load from Firestore
           });
         }
       } catch (e) {
         print('Error loading user info: $e');
       }
     }
+  }
+
+
+  void _onEditImageTap() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    final imageUrl = await uploader.pickAndUploadImage();
+    if (imageUrl != null) {
+      await _onImageUploaded(imageUrl);
+    } else {
+      print('Image upload canceled or failed');
+    }
+
+    setState(() {
+      _isLoading = false;
+    });
   }
 
   @override

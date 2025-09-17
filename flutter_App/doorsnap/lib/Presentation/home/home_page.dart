@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:ui';
 import 'package:doorsnap/Data/Service/service_locator.dart';
 import 'package:doorsnap/Presentation/home/screen/aboutUsPage.dart';
@@ -10,7 +11,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:intl/intl.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -29,28 +29,54 @@ class _HomePageState extends State<HomePage> {
   bool _isLoading = true;
   String? _profileImageUrl;
 
+  StreamSubscription<DocumentSnapshot>? _userDataSubscription; 
+
   @override
   void initState() {
     super.initState();
     _getUserDeviceId();
     _getUserInformation();
-    _loadProfileImage();
     _getToken();
+    _setupUserDataListener();
   }
 
-    Future<void> _loadProfileImage() async {
-    final prefs = await SharedPreferences.getInstance();
-    setState(() {
-      _profileImageUrl = prefs.getString('uploadedImageUrl');
-    });
+  @override
+  void dispose() {
+    _userDataSubscription?.cancel(); // Cancel subscription
+    super.dispose();
   }
+
+
+  void _setupUserDataListener() {
+    final currentUser = _auth.currentUser;
+    if (currentUser != null) {
+      _userDataSubscription = _firestore
+          .collection('users')
+          .doc(currentUser.uid)
+          .snapshots()
+          .listen((DocumentSnapshot snapshot) {
+        if (snapshot.exists && mounted) {
+          final data = snapshot.data() as Map<String, dynamic>;
+          setState(() {
+            _fullName = data['fullName'] ?? '';
+            _phoneNumber = data['phoneNumber'] ?? '';
+            _profileImageUrl = data['profileImageUrl']; // This will update automatically
+          });
+        }
+      }, onError: (error) {
+        print('Error listening to user data: $error');
+      });
+    }
+  }
+
+    
 
   Future<void> _getToken() async {
     String? token = await FirebaseMessaging.instance.getToken();
-    print("Device FCM Token: $token");
-    // This function is a placeholder for getting the FCM token
-    // Implement FCM token retrieval and storage as needed
+    print("Device FCM Token: $token");    
   }
+
+  
 
   // we here take the current user's deviceId from their user document
   Future<void> _getUserDeviceId() async {
@@ -85,26 +111,27 @@ class _HomePageState extends State<HomePage> {
   // Fetch additional user information
 
   Future<void> _getUserInformation() async {
-    final currentUser = _auth.currentUser;
-    if (currentUser != null) {
-      try {
-        final userDoc = await _firestore
-            .collection('users')
-            .doc(currentUser.uid)
-            .get();
+  final currentUser = _auth.currentUser;
+  if (currentUser != null) {
+    try {
+      final userDoc = await _firestore
+          .collection('users')
+          .doc(currentUser.uid)
+          .get();
 
-        if (userDoc.exists) {
-          final data = userDoc.data();
-          setState(() {
-            _fullName = data?['fullName'] ?? '';
-            _phoneNumber = data?['phoneNumber'] ?? '';
-          });
-        }
-      } catch (e) {
-        _showErrorSnackBar('Error loading user info: $e');
+      if (userDoc.exists) {
+        final data = userDoc.data();
+        setState(() {
+          _fullName = data?['fullName'] ?? '';
+          _phoneNumber = data?['phoneNumber'] ?? '';
+          _profileImageUrl = data?['profileImageUrl']; // Load from Firestore
+        });
       }
+    } catch (e) {
+      _showErrorSnackBar('Error loading user info: $e');
     }
   }
+}
 
 
   void _showErrorSnackBar(String message) {
@@ -196,31 +223,26 @@ class _HomePageState extends State<HomePage> {
               padding: const EdgeInsets.only(left: 20, top: 10),
               decoration: const BoxDecoration(
                 color: Color.fromARGB(255, 26, 70, 165),
-              gradient: LinearGradient(
-                colors: [ Color.fromARGB(255, 16, 56, 141), Color.fromARGB(255, 14, 118, 170)],
-                begin: Alignment.bottomCenter,
-                end: Alignment.topCenter,
-              )
+                gradient: LinearGradient(
+                  colors: [Color.fromARGB(255, 16, 56, 141), Color.fromARGB(255, 14, 118, 170)],
+                  begin: Alignment.bottomCenter,
+                  end: Alignment.topCenter,
+               )
               ),
               child: Column(
-                
-                crossAxisAlignment: CrossAxisAlignment.start,
+               crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CircleAvatar(
-                    
-                    radius: 40,
-                     backgroundImage: _profileImageUrl == null || _profileImageUrl!.isEmpty
-                        ? const AssetImage('assets/images/defaultProfileImage.png')
-                            as ImageProvider
-                        : NetworkImage(_profileImageUrl!),
-                     
+                   radius: 40,
+                   backgroundImage: _profileImageUrl == null || _profileImageUrl!.isEmpty
+                       ? const NetworkImage('https://www.tenforums.com/attachments/user-accounts-family-safety/322690d1615743307-user-account-image-log-user.png')
+                       : NetworkImage(_profileImageUrl!) as ImageProvider,
                   ),
-
-                  Text("$_fullName" , style:  TextStyle(color: Colors.white, fontSize: 18),),  // this should be replaced with the users name from database
-                  Text("$_phoneNumber",  style: TextStyle(color:  Colors.grey.shade300),)     // this should be replaced with the users phone number from database
-                ],
-              ),
-            ),
+                  Text("$_fullName", style: TextStyle(color: Colors.white, fontSize: 18)),
+                  Text("$_phoneNumber", style: TextStyle(color: Colors.grey.shade300))
+               ],
+             ),
+            ),            
             ListTile(
               leading: const Icon(Icons.account_circle),
               title: const Text('My Profile'),
