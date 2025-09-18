@@ -23,6 +23,11 @@ It allows users to **view visitor logs**, manage their **profile & settings**, a
 - **Notifications:** Firebase Cloud Messaging (FCM)  
 
 ---
+## Demo Video
+- [Click to Watch demo App video](https://res.cloudinary.com/dytuvjwqu/video/upload/v1758215444/DOORSNAP_mcfkrd.mp4)
+
+
+---
 
 ## 🚀 Getting Started
 
