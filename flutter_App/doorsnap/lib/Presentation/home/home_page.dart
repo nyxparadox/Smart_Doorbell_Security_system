@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:doorsnap/Data/Service/service_locator.dart';
 import 'package:doorsnap/Presentation/home/screen/aboutUsPage.dart';
 import 'package:doorsnap/Presentation/home/screen/auth/login_screen.dart';
+import 'package:doorsnap/Presentation/home/screen/settings_screen.dart';
 import 'package:doorsnap/Presentation/home/screen/user_profile_screen.dart';
 import 'package:doorsnap/Router/app_router.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -253,10 +254,7 @@ class _HomePageState extends State<HomePage> {
             ListTile(
               leading: const Icon(Icons.settings),
               title: const Text('Settings'),
-              onTap: () {
-                // Navigate to settings page
-                Navigator.pop(context);
-              },
+              onTap: () => getIt<AppRouter>().push(const SettingsScreen()),
             ),
 
             ListTile(
@@ -266,8 +264,8 @@ class _HomePageState extends State<HomePage> {
             ),
 
             ListTile(
-              leading: const Icon(Icons.logout),
-              title: const Text('Logout'),
+              leading: const Icon(Icons.logout, color: Color.fromARGB(255, 189, 33, 22),),
+              title: const Text('Logout', style: TextStyle(color: Color.fromARGB(255, 189, 33, 22)),),
               onTap: () => getIt<AppRouter>().pushReplacement(const LoginScreen()),
             ),
           ],

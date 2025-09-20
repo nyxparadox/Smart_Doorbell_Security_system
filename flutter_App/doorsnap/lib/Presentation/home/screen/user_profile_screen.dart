@@ -1,3 +1,4 @@
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doorsnap/Data/Repository/profile_image_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -31,17 +32,18 @@ class _UserProfileScreenState extends State<UserProfileScreen> with TickerProvid
   void initState() {
     super.initState();
     _setupAnimations();
-    _getUserInformation(); // This will load profile image from Firestore
+    _getUserInformation();                      // Fetch user info on init
     _animationController.forward();
   }
 
+// setting up animations to make UI more interactive  
   void _setupAnimations() {
     _animationController = AnimationController(
       duration: const Duration(milliseconds: 800),
       vsync: this,
     );
 
-    _fadeAnimation = Tween<double>(
+    _fadeAnimation = Tween<double>(    
       begin: 0.0,
       end: 1.0,
     ).animate(CurvedAnimation(
@@ -49,7 +51,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> with TickerProvid
       curve: Curves.easeInOut,
     ));
 
-    _slideAnimation = Tween<Offset>(
+    _slideAnimation = Tween<Offset>(    // Slide transition for smooth entry
       begin: const Offset(0, 0.3),
       end: Offset.zero,
     ).animate(CurvedAnimation(
@@ -61,8 +63,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> with TickerProvid
   }
 
   @override
-  void dispose() {
-    _animationController.dispose();
+  void dispose() {                          // Dispose is for cleaning up resources
+    _animationController.dispose();         
     super.dispose();
   }
 
@@ -76,18 +78,17 @@ class _UserProfileScreenState extends State<UserProfileScreen> with TickerProvid
     final currentUser = _auth.currentUser;
     if (currentUser != null) {
       try {
-        // Save to Firestore
         await _firestore.collection('users').doc(currentUser.uid).update({
           'profileImageUrl': imageUrl,
           'profileUpdatedAt': Timestamp.now(),
         });
 
-        // Update local state
+        
         setState(() {
-          _uploadedImageUrl = imageUrl;
+          _uploadedImageUrl = imageUrl;    // Update local state to reflect new image
         });
 
-        // Show success message
+        
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Profile picture updated successfully!'),
@@ -109,7 +110,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> with TickerProvid
       }
     }
   }
-
+//   fetch user information from Firestore
   Future<void> _getUserInformation() async {
     final currentUser = _auth.currentUser;
     if (currentUser != null) {
@@ -128,7 +129,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> with TickerProvid
             _phoneNumber = data?['phoneNumber'] ?? 'No phone provided';
             _email = data?['email'] ?? currentUser.email ?? 'No email';
             _userDeviceId = data?['deviceId'] ?? 'No device ID';
-            _uploadedImageUrl = data?['profileImageUrl']; // Load from Firestore
+            _uploadedImageUrl = data?['profileImageUrl'];               // tihs image wil fetched from firestore
           });
         }
       } catch (e) {
@@ -143,7 +144,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> with TickerProvid
       _isLoading = true;
     });
 
-    final imageUrl = await uploader.pickAndUploadImage();
+    final imageUrl = await uploader.pickAndUploadImage();    // pick and upload image
     if (imageUrl != null) {
       await _onImageUploaded(imageUrl);
     } else {
