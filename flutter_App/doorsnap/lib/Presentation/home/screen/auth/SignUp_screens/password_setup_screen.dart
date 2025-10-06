@@ -92,7 +92,7 @@ class _PasswordSetupScreenState extends State<PasswordSetupScreen> {
       
       if (mounted) {
         _showSuccessSnackBar('Password created successfully!');
-        getIt<AppRouter>().push( const DeviceIdRegistrationScreen());
+        getIt<AppRouter>().pushAndRemoveUntil( const DeviceIdRegistrationScreen());
       }
     } catch (e) {
       if (mounted) {

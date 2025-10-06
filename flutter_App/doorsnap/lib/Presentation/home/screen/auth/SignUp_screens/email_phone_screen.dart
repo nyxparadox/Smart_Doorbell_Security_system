@@ -160,7 +160,7 @@ class _EmailPhoneScreenState extends State<EmailPhoneScreen> {
 
         
         // Navigate to OTP verification screen
-        getIt<AppRouter>().push(
+        getIt<AppRouter>().pushAndRemoveUntil(
           OtpVerificationScreen(
             email: _emailController.text.trim(),
             phone: formattedPhone,       

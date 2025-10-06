@@ -38,7 +38,7 @@ def on_snapshot(col_snapshot, changes, read_time):
                     except Exception as e:
                         print("Error sending notification:", e)
                 else:
-                    print(f" No fcmToken found for user {user_doc.id}")
+                    print(f" No fcmToken 'found' for user {user_doc.id}")
 
 col_query = db.collection("visitors")
 col_query.on_snapshot(on_snapshot)
@@ -46,3 +46,5 @@ col_query.on_snapshot(on_snapshot)
 print("🔍 Listening for visitors...")
 while True:
     pass
+
+

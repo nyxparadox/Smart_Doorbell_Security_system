@@ -31,7 +31,7 @@ class _DeviceIdRegistrationScreenState extends State<DeviceIdRegistrationScreen>
     try{
       await getIt<AuthCubit>().deviceIdDetails(deviceId: _deviceIdController.text);
 
-      getIt<AppRouter>().push(const HomePage());
+      getIt<AppRouter>().pushAndRemoveUntil( HomePage());
     }catch (e) {
       log(e.toString());
     } finally {

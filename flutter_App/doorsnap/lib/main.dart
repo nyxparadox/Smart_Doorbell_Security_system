@@ -1,10 +1,14 @@
 import 'package:doorsnap/Data/Service/service_locator.dart';
+import 'package:doorsnap/Logics/cubit/auth_cubit.dart';
+import 'package:doorsnap/Presentation/home/home_page.dart';
 import 'package:doorsnap/Presentation/home/screen/auth/login_screen.dart';
+import 'package:doorsnap/Presentation/wrapper/app_wrapper.dart';
 import 'package:doorsnap/Router/app_router.dart';
 import 'package:doorsnap/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 
@@ -77,18 +81,21 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'DoorSnap',
-      navigatorKey:
-          getIt<AppRouter>().navigatorKey, // Use the AppRouter's navigator key
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color.fromARGB(255, 24, 65, 136),
+    return BlocProvider(
+      create: (context) => getIt<AuthCubit>(),
+      child: MaterialApp(
+        title: 'DoorSnap',
+        navigatorKey:
+            getIt<AppRouter>().navigatorKey, // Use the AppRouter's navigator key
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: const Color.fromARGB(255, 24, 65, 136),
+          ),
         ),
+      
+        debugShowCheckedModeBanner: false,
+        home: const AppWrapper(),
       ),
-
-      debugShowCheckedModeBanner: false,
-      home: const LoginScreen(),
     );
   }
 }

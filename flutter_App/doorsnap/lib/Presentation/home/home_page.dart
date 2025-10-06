@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:ui';
 import 'package:doorsnap/Data/Service/service_locator.dart';
+import 'package:doorsnap/Logics/cubit/auth_cubit.dart';
 import 'package:doorsnap/Presentation/home/screen/aboutUsPage.dart';
 import 'package:doorsnap/Presentation/home/screen/auth/login_screen.dart';
 import 'package:doorsnap/Presentation/home/screen/settings_screen.dart';
@@ -117,7 +118,7 @@ class _HomePageState extends State<HomePage> {
     try {
       final userDoc = await _firestore
           .collection('users')
-          .doc(currentUser.uid)
+          .doc(currentUser.uid)// Create a new file: lib/Presentation/wrapper/app_wrapper.dart
           .get();
 
       if (userDoc.exists) {
@@ -176,7 +177,7 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -266,7 +267,10 @@ class _HomePageState extends State<HomePage> {
             ListTile(
               leading: const Icon(Icons.logout, color: Color.fromARGB(255, 189, 33, 22),),
               title: const Text('Logout', style: TextStyle(color: Color.fromARGB(255, 189, 33, 22)),),
-              onTap: () => getIt<AppRouter>().pushReplacement(const LoginScreen()),
+              onTap: () async {
+              getIt<AuthCubit>().signOut();
+              getIt<AppRouter>().pushAndRemoveUntil(const LoginScreen());
+            },
             ),
           ],
         ),

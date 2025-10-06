@@ -150,6 +150,20 @@ class AuthRepository extends BaseRepository {
     }
   }
 
+  Future <void> signOut() async {
+    try {
+      final uid = auth.currentUser?.uid;
+      if (uid != null) {
+        await clearUserSpecificData(uid);
+      }
+      await auth.signOut();
+      log('User signed out successfully');
+    } catch (e) {
+      log('Error signing out: $e');
+      throw "Failed to sign out: $e";
+    }
+  }
+
   
 
   Future<bool> checkUsernameExists(String username) async {

@@ -64,7 +64,7 @@ class _UserDetailsSetupScreenState extends State<UserDetailsSetupScreen> {
         address: _addressController.text,
       );
 
-      getIt<AppRouter>().push(PasswordSetupScreen(email: widget.email,));
+      getIt<AppRouter>().pushAndRemoveUntil(PasswordSetupScreen(email: widget.email,));
       
     } catch (e) {
       log(e.toString());

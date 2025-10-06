@@ -69,7 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
         final authState = getIt<AuthCubit>().state;
         if (authState.status == AuthStatus.authenticated && authState.user != null) {
-          await getIt<AppRouter>().pushReplacement(HomePage());
+          await getIt<AppRouter>().pushAndRemoveUntil(const HomePage());
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(authState.error ?? 'Login failed'), backgroundColor: Colors.red,),

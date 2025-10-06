@@ -84,7 +84,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
           fcmToken: fcmToken, // Pass the FCM token
         );
 
-        getIt<AppRouter>().push(UserDetailsSetupScreen(email: widget.email));
+        getIt<AppRouter>().pushAndRemoveUntil(UserDetailsSetupScreen(email: widget.email));
 
       } catch(e) {
         _showSnackBar("${e.toString()}", Colors.red);
