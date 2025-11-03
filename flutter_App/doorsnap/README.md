@@ -25,8 +25,10 @@ It allows users to **view visitor logs**, manage their **profile & settings**, a
 ---
 ## Demo Video
 - [Click to Watch demo App video](https://res.cloudinary.com/dytuvjwqu/video/upload/v1758215444/DOORSNAP_mcfkrd.mp4)
+---
 
-
+## App Interface screenshots
+![App interface screenshots](https://res.cloudinary.com/dytuvjwqu/image/upload/v1762180284/doorsnap_app_interface_screenshots_ndbvui.png)
 ---
 
 ## 🚀 Getting Started
