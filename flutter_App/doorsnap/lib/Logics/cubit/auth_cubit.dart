@@ -1,4 +1,3 @@
-
 import 'dart:async';
 import 'package:doorsnap/Data/Repository/auth_repository.dart';
 import 'package:doorsnap/Logics/cubit/auth_state.dart';
@@ -131,8 +130,8 @@ class AuthCubit extends Cubit<AuthState> {
   }
   
 
-
-  Future<void> signIn({
+           
+  Future<void> signIn({                         
     required String email,
     required String password,
   }) async {
@@ -155,7 +154,7 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  Future<void> signOut() async {
+  Future<void> signOut() async {                          
     try {
       emit(state.copyWith(status: AuthStatus.loading));
       await _authRepository.signOut();
@@ -172,7 +171,7 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
 
-  Future<void> checkAuthenticationStatus() async {
+  Future<void> checkAuthenticationStatus() async {               // Function to check whether user is authenticated or not
   try {
     emit(state.copyWith(status: AuthStatus.loading));
     

@@ -150,11 +150,11 @@ class _PasswordSetupScreenState extends State<PasswordSetupScreen> {
           "Create Password",
           style: TextStyle(color: Colors.white),
         ),
-        backgroundColor: const Color.fromARGB(255, 52, 105, 196),
+        backgroundColor: const Color.fromARGB(255, 16, 56, 141),
       ),
 
       body: Container(
-        color: const Color.fromARGB(255, 192, 203, 209),
+        color: const Color.fromARGB(255, 228, 234, 237),
 
         child: Padding(
           padding: const EdgeInsets.only(left: 25, right: 25),
@@ -166,7 +166,7 @@ class _PasswordSetupScreenState extends State<PasswordSetupScreen> {
                   width: double.infinity,
                   height: 800,
                   decoration: BoxDecoration(
-                    color: Colors.white54,
+                    color: Colors.white,
                     borderRadius: BorderRadius.circular(40),
                     boxShadow: [
                       BoxShadow(

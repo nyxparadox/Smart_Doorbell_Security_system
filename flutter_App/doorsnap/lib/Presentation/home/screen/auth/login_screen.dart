@@ -95,7 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        color: const Color.fromARGB(255, 192, 203, 209),
+        color: const Color.fromARGB(255, 228, 234, 237),
         child: SafeArea(
           child: Form(
             key: _formkey,
@@ -106,7 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: MediaQuery.of(context).size.height - 
                        MediaQuery.of(context).padding.top - 300,
                 decoration: BoxDecoration(
-                  color: Colors.white38,
+                  color: Colors.white,
                   borderRadius: BorderRadius.circular(25),
                   boxShadow: [
                     BoxShadow(

@@ -49,7 +49,7 @@ class _DeviceIdRegistrationScreenState extends State<DeviceIdRegistrationScreen>
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        color: const Color.fromARGB(255, 192, 203, 209),
+        color: const Color.fromARGB(255, 228, 234, 237),
 
         child: Center(
           child: Padding(
@@ -58,7 +58,7 @@ class _DeviceIdRegistrationScreenState extends State<DeviceIdRegistrationScreen>
               width: double.infinity,
               height: 200,
               decoration: BoxDecoration(
-                color: Colors.white54,
+                color: Colors.white,
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withOpacity(0.1),

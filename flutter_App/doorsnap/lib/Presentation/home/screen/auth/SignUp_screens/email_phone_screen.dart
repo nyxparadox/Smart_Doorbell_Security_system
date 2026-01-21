@@ -206,14 +206,14 @@ class _EmailPhoneScreenState extends State<EmailPhoneScreen> {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: const Text('SignUP ', style: TextStyle(color: Colors.white)),
-        backgroundColor: const Color.fromARGB(255, 52, 105, 196),
+        backgroundColor:const Color.fromARGB(255, 16, 56, 141),
       ),
 
       body: Center(
         child: Container(
           width: double.infinity,
           height: double.infinity,
-          decoration: BoxDecoration(color: Color.fromARGB(255, 192, 203, 209)),
+          decoration: BoxDecoration(color: const Color.fromARGB(255, 228, 234, 237)),
 
           padding: const EdgeInsets.only(left: 25, right: 25),
 
@@ -222,7 +222,7 @@ class _EmailPhoneScreenState extends State<EmailPhoneScreen> {
               width: double.infinity,
               height: 800,
               decoration: BoxDecoration(
-                color: Colors.white60,
+                color: Colors.white,
                 borderRadius: BorderRadius.circular(40),
                 boxShadow: [
                   BoxShadow(

@@ -1,7 +1,5 @@
 import 'package:doorsnap/Data/Service/service_locator.dart';
 import 'package:doorsnap/Logics/cubit/auth_cubit.dart';
-import 'package:doorsnap/Presentation/home/home_page.dart';
-import 'package:doorsnap/Presentation/home/screen/auth/login_screen.dart';
 import 'package:doorsnap/Presentation/wrapper/app_wrapper.dart';
 import 'package:doorsnap/Router/app_router.dart';
 import 'package:doorsnap/firebase_options.dart';
@@ -13,7 +11,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 
 
-///  Local Notifications setup
+//  Local Notifications setup
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
 
@@ -30,7 +28,7 @@ Future<void> initLocalNotifications() async {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  await setupserviceLocator(); // Initialize the service locator
+  await setupserviceLocator();                           // Initialize the service locator
   await requestNotificationPermission(); 
   await initLocalNotifications();
 
@@ -42,8 +40,8 @@ void main() async {
     if (message.notification != null) {
     const AndroidNotificationDetails androidDetails =
       AndroidNotificationDetails(
-        "doorsnap_channel", // channel id
-        "DoorSnap Notifications", // channel name
+        "doorsnap_channel",                             // channel id
+        "DoorSnap Notifications",                       // channel name
         importance: Importance.high,
         priority: Priority.high,
       );

@@ -150,7 +150,7 @@ class AuthRepository extends BaseRepository {
     }
   }
 
-  Future <void> signOut() async {
+  Future <void> signOut() async {                          // Sign out/ log out function
     try {
       final uid = auth.currentUser?.uid;
       if (uid != null) {
@@ -166,7 +166,7 @@ class AuthRepository extends BaseRepository {
 
   
 
-  Future<bool> checkUsernameExists(String username) async {
+  Future<bool> checkUsernameExists(String username) async {       // Function to check whether username already exists in firestore
     try {
       final querySnapshot = await firestore
           .collection('users')
@@ -299,7 +299,7 @@ Future<void> updateProfileImage(String uid, String imageUrl) async {
 }
 
 
-// Get user's profile image URL from Firestore
+// Function for Geting user's profile image URL from Firestore
 Future<String?> getUserProfileImage(String uid) async {
   try {
     final doc = await firestore.collection('users').doc(uid).get();
@@ -320,10 +320,10 @@ Future<void> clearUserSpecificData(String uid) async {
   try {
     final prefs = await SharedPreferences.getInstance();
     
-    // Clear user-specific keys
+    
     await prefs.remove('uploadedImageUrl_$uid');
     await prefs.remove('userProfileCache_$uid');
-    // Add any other user-specific keys you might have
+    
     
     log('User-specific data cleared for UID: $uid');
   } catch (e) {
