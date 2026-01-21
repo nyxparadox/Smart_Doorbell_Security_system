@@ -283,7 +283,7 @@ class AboutUsPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 6),
                 Text(
-                  "Full Stack Developer & Founder",
+                  "Full Stack Embedded Engineer",
                   style: TextStyle(
                     fontSize: 14,
                     color: Colors.grey.shade600,
@@ -291,7 +291,10 @@ class AboutUsPage extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 20),
-                _buildSocialIcons(),
+                Container(
+                  width: double.infinity,
+                  height: 50,
+                  child: _buildSocialIcons()),
               ],
             ),
           ),
@@ -303,19 +306,19 @@ class AboutUsPage extends StatelessWidget {
   Widget _buildSocialIcons() {
     final socialLinks = [
       {
-        'icon': Icons.camera_alt,
+        'icon': /*Icons.camera_alt, */  Image.asset("assets/images/image.png"),
         'url': instagramUrl,
-        'color': const Color(0xFFE4405F),
+        // 'color': const Color(0xFFE4405F),
       },
       {
-        'icon': Icons.work_outline,
+        'icon': /*Icons.work_outline,*/ Image.asset("assets/images/Linkedin.png"),
         'url': linkedinUrl,
-        'color': const Color(0xFF0A66C2),
+        // 'color': const Color(0xFF0A66C2),
       },
       {
-        'icon': Icons.code,
+        'icon': /* Icons.code, */  Image.asset("assets/images/Github.png"),
         'url': githubUrl,
-        'color': const Color(0xFF24292F),
+        // 'color': const Color(0xFF24292F),
       },
     ];
 
@@ -325,18 +328,25 @@ class AboutUsPage extends StatelessWidget {
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8),
           child: Material(
-            color: social['color'] as Color,
+            // color: social['color'] as Color,
             borderRadius: BorderRadius.circular(12),
             child: InkWell(
               borderRadius: BorderRadius.circular(12),
               onTap: () => _launchURL(social['url'] as String),
               child: Container(
-                padding: const EdgeInsets.all(12),
+                // padding: const EdgeInsets.all(7),
+                child: social['icon'] as Image,
+
+
+                /*
                 child: Icon(
                   social['icon'] as IconData,
                   color: Colors.white,
                   size: 20,
                 ),
+                */
+
+
               ),
             ),
           ),
