@@ -1,0 +1,11 @@
+# service file are indiviaduals database account file 
+# it contains private key and data of firestore database 
+serviceAccountKey.json
+
+face_artifacts.pkl
+
+Faces_Embedding.npz
+
+__pycache__/
+
+Faces_Dataset/
