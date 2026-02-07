@@ -130,7 +130,7 @@ class AuthCubit extends Cubit<AuthState> {
   }
   
 
-           
+         
   Future<void> signIn({                         
     required String email,
     required String password,

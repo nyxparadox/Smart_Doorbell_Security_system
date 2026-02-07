@@ -9,7 +9,6 @@ from keras_facenet import FaceNet
 
 
 
-
 #-------FUNCTIONS--------
 class FACELOADINGS:
     def __init__(self, directory):
@@ -50,14 +49,13 @@ class FACELOADINGS:
         return np.asarray(self.X), np.asarray(self.Y)
     
 
-faceloadings = FACELOADINGS('/home/paradox/Documents/FLUTTER PROJECTS/Smart Doorbell Security System/Smart_Doorbell_Security_system/Backend/face_recognition_service/Faces_Dataset/train')
+faceloadings = FACELOADINGS('___Path/to/train/Directory____')    #path of directory where you have stored named imaged folders for train
 X,Y = faceloadings.Load_classes()
 #------FACENET ---------------
 embedder = FaceNet()
 
 def GET_EMBEDDING(face_img):
     face_img= face_img.astype('float32')    # convert image in 3D vector
-    # face_img = (face_img - 127.5) / 128.0
     face_img = np.expand_dims(face_img , axis=0)
     embedding =  embedder.embeddings(face_img)
     return embedding[0]

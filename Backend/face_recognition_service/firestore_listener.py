@@ -52,10 +52,3 @@ print("Listening for visitor events...")
 while True:
     time.sleep(60)
 
-        
-
-"""from face_recognizer import recognize_from_url
-
-url = "https://res.cloudinary.com/dytuvjwqu/image/upload/v1769111249/IMG_20260122_144822108_HDR_scbzda.jpg"
-result = recognize_from_url(url)
-print(result)"""

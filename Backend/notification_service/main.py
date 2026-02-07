@@ -16,7 +16,7 @@ def on_snapshot(col_snapshot, changes, read_time):
             image_url = visitor.get("imageUrl")
             timestamp = visitor.get("timestamp")
 
-            # Lookup user with this deviceId
+            # Lookup user withgit branch feature/new-face-feature  this deviceId
             users_ref = db.collection("users").where("deviceId", "==", device_id).stream()
             for user_doc in users_ref:
                 user = user_doc.to_dict()

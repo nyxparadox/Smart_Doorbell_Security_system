@@ -322,6 +322,7 @@ void uploadToFirestore(String imageUrl) {
   JsonObject fields = doc.createNestedObject("fields");
   fields["deviceId"]["stringValue"] = "<YOUR_DEVICE_ID>";
   fields["imageUrl"]["stringValue"] = imageUrl;
+  fields["status"]["stringValue"] = "pending";
   fields["timestamp"]["timestampValue"] = getFirestoreTimestamp(); // Changed to timestampValue
   
   String payload;

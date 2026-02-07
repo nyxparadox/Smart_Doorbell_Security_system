@@ -168,12 +168,12 @@ class _HomePageState extends State<HomePage> {
   }
 
   // Navigate to full image view
-  void _showFullImage(String imageUrl, String timestamp) {
+  void _showFullImage(String imageUrl, String timestamp, String Name, String Relation, bool? Recognized,) {
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) =>
-            FullImageView(imageUrl: imageUrl, timestamp: timestamp),
+            FullImageView(imageUrl: imageUrl, timestamp: timestamp, Name: Name, Relation: Relation,Recognized: Recognized,),
       ),
     );
   }
@@ -421,6 +421,9 @@ class _HomePageState extends State<HomePage> {
                             final visitorData =
                                 visitors[index].data() as Map<String, dynamic>;
                             final imageUrl = visitorData['imageUrl'] ?? '';
+                            final Name = visitorData['Name'] ?? '';
+                            final Relation = visitorData['Relation'] ?? '';
+                            final Recognized = visitorData['Recognized'] as bool?;
                             final timestamp =
                                 visitorData['timestamp'] as Timestamp;
                             final formattedTime = _formatTimestamp(timestamp);
@@ -458,6 +461,9 @@ class _HomePageState extends State<HomePage> {
                                         onTap: () => _showFullImage(
                                           imageUrl,
                                           formattedTime,
+                                          Name,
+                                          Relation,
+                                          Recognized,
                                         ),
                                         borderRadius: BorderRadius.circular(20),
                                         child: Padding(
@@ -620,11 +626,19 @@ class _HomePageState extends State<HomePage> {
 // Full Image View Screen
 class FullImageView extends StatelessWidget {
   final String imageUrl;
+  final String Name;
+  final String Relation;
+  final bool? Recognized;
+
   final String timestamp;
 
   const FullImageView({
     super.key,
     required this.imageUrl,
+    required this.Name,
+    required this.Relation,
+    this.Recognized,
+
     required this.timestamp,
   });
 
@@ -639,28 +653,60 @@ class FullImageView extends StatelessWidget {
         title: Text(timestamp, style: const TextStyle(color: Colors.white)),
       ),
       body: Center(
-        child: InteractiveViewer(
-          child: CachedNetworkImage(
-            imageUrl: imageUrl,
-            fit: BoxFit.contain,
-            placeholder: (context, url) => const Center(
-              child: CircularProgressIndicator(color: Colors.white),
+          child: Column(                  
+          children: [
+            Padding(padding: EdgeInsets.only(top: 65),),
+            InteractiveViewer(
+              child: CachedNetworkImage(
+                imageUrl: imageUrl,
+                fit: BoxFit.contain,
+                placeholder: (context, url) => const Center(
+                  child: CircularProgressIndicator(color: Colors.white),
+                ),
+                errorWidget: (context, url, error) => const Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.broken_image, color: Colors.white, size: 64),
+                      SizedBox(height: 16),
+                      Text(
+                        'Failed to load image',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              
+              
             ),
-            errorWidget: (context, url, error) => const Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+            SizedBox(height: 16,),
+            Text("Name: ${Name}", style: TextStyle(color: Colors.white, fontSize: 23),),
+            SizedBox(height: 16,),
+            Text("Relation: ${Relation}", style: TextStyle(color: Colors.white,),),
+            SizedBox(height: 16,),
+            RichText(
+              text: TextSpan(
                 children: [
-                  Icon(Icons.broken_image, color: Colors.white, size: 64),
-                  SizedBox(height: 16),
-                  Text(
-                    'Failed to load image',
+                  TextSpan(
+                    text: "Recognized: ",
                     style: TextStyle(color: Colors.white),
+                  ),
+                  TextSpan(
+                    text: Recognized == true ? "Yes" : (Recognized == false ? "No" : "Unknown"),
+                    style: TextStyle(
+                      color: Recognized == true ? Colors.green : (Recognized == false ? Colors.red : Colors.grey),
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ],
               ),
             ),
-          ),
+
+
+          ],
         ),
+        
       ),
     );
   }
