@@ -46,3 +46,4 @@ app.*.map.json
 
 # firebase API and conection with app
 firebase_options.dart
+firebase.json 
